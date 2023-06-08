@@ -1,8 +1,8 @@
-# BIM2TWIN - Itegration with ThingIn platform
+# BIM2TWIN - Integration with ThingIn platform
 
-This repository contains the first version of the integration between python written code and the Digital Twin
-Platform (DTP), i.e., Thing'in.
-The purpose of this document is to explain the code and its usage.
+This repository contains the first version of the API to communicate with Digital Twin Platform (DTP),
+i.e., [Thing'in](https://thinginthefuture.bim2twin.eu). The purpose of this document is to explain the code and its
+usage.
 
 The code was extracted from the internal code of WP3.
 
@@ -10,11 +10,11 @@ The code was extracted from the internal code of WP3.
 
 The integration code has been written in python, and the environment has been set up using conda.
 
-In order to re-create the provided conda environment it is sufficient to run:
+We recommend create conda environment:
 
 ```conda env create -n DTP_V1 python=3.9```
 
-after this step the environment can be activated and install packages by:
+activate conda environment and install packages by:
 
 ```
 conda activate DTP_V1
@@ -23,16 +23,21 @@ pip install -r requirements.txt
 
 Once the conda environment is set up and activated, we are ready to run the code.
 
+## Authentication
+
+Authentication token from [Thing'in](https://thinginthefuture.bim2twin.eu) should be placed in a `.txt` file without
+string `Bearer` in the token and path to this file should be given in the `DTP_config.xml`.
+
 ## Logged information
 
-Currently, the program is using two logs: the general log stored in `DTP_WP3.log`, and the second `db_session.log`, used
-for storing information about database changing queries. The second log can be used to revert changes done on the
+Currently, the program is using two logs: the general log stored in `DTP_WP3.log`, and the second `db_session_x.log`,
+used or storing information about database changing queries. The second log can be used to revert changes done on the
 database. In order to revert to the last session, it is necessary to call the program with the argument `-r` followed by
 the path to the file. In principle, the database can also be restored from the general log file, but this option has not
 been sufficiently tested.
 
 **Note that, the general log file `DTP_WP3.log`, contains also raw HTTP requests, together with the authentication
-token.**
+token. Session is logged only for `create_DTP_API` and `link_DTP_API`.**
 
 ### Example of the general log file
 
@@ -80,13 +85,12 @@ Content-Length: 170
 10-Oct-22 13:49:35 : DTP_API - END SESSION
 ```
 
-## Control via XML
+## Control via XML configuration file
 
-Below is an example of ax XML used to generalize the integration and push certain information from the code to the
+XML configuration file is used to generalize the integration and push certain information from the code to the
 external configuration file to make the implementation general and easy to maintain.
 
-
-### The below list explains the tags:
+### DTP configuration tags:
 
 * `DTP_config`: the root of the XML configuration,
 * `NAME`: name given to the configuration, for example, the name of the platform,
@@ -103,12 +107,41 @@ external configuration file to make the implementation general and easy to maint
         * `type` : for now only `xs:anyURI`,
 
 ## Code structure
-* `DTP_API.py` : implementation of the DTP's API calls
-* `DTP_config.py` : class which maps the XML configuration and is the primary source of information shared in the
-   other parts of the code
-* `helpers.py` : some function shared across the project
 
+```
+├── DTP_API.py                              # Base API class for mixin classes
+├── dtp_apis
+│   ├── count_DTP_API.py                    # Mixin count API class
+│   ├── create_DTP_API.py                   # Mixin create API class
+│   ├── fetch_DTP_API.py                    # Mixin fetch API class
+│   ├── link_DTP_API.py                     # Mixin link API class
+│   ├── revert_DTP_API.py                   # Mixin revert API class
+│   └── send_DTP_API.py                     # Mixin send API class
+├── DTP_config.py                           # XML parser class
+├── DTP_config.xml                          # DTP configuration file
+├── examples
+│   ├── count_activity_tasks.py
+│   └── fetch_construction_operation.py
+├── helpers.py                              # shared functions
+├── multiprocessing_logging.py              # enables multiprocessing
+├── README.md
+├── requirements.txt
+└── thingin_token.txt
 
-## How to start
+```
 
-Please see the folder named `examples` and there file therein.
+## Examples
+
+Please see the `examples` folder for sample code to use DTP APIs.
+
+Count task nodes connected to a node identified by `activity_node_iri`
+
+```shell
+python3 count_activity_tasks.py --xml_path ../DTP_config.xml -l /path/to/logdir
+```
+
+Fetch operation nodes connected to a node identified by `constr_node_iri`
+
+```shell
+python3 fetch_construction_operation.py --xml_path ../DTP_config.xml -l /path/to/logdir
+```
