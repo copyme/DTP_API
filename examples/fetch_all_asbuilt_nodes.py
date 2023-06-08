@@ -14,6 +14,20 @@ from DTP_config import DTP_Config
 from DTP_API import DTPApi
 
 
+# This method iteretes over pages of 100 nodes until all the nodes are fetched.
+
+def fetch_asbuilt_nodes(dtp_api):
+    as_build_elements = dtp_api.fetch_asbuilt_nodes()
+    elements = as_build_elements
+    while 'next' in elements.keys() and elements['size'] != 0: # more pages detected
+        elements = dtp_api.fetch_asbuilt_nodes(elements['next'])
+        if elements['size'] <= 0:
+            break
+        as_build_elements.update(elements)
+
+    return as_build_elements
+
+
 def parse_args():
     """
     Get parameters from user
@@ -29,8 +43,5 @@ if __name__ == "__main__":
     args = parse_args()
     dtp_config = DTP_Config(args.xml_path)
     dtp_api = DTPApi(dtp_config, simulation_mode=args.simulation)
-    
-    # In order to test the initialization we call a method which counds tasks nodes connected to an activity
-    # all counting is done via a query to DTP
-    response = dtp_api.activity_count_connected_task_nodes("http://bim2twin.eu/mislata_wp3/activity91217940_2")
-    print('Response:\n', response)
+    asbuilt_nodes = fetch_asbuilt_nodes(dtp_api)
+    print('Nodes:\n', asbuilt_nodes)
