@@ -107,7 +107,7 @@ class FetchAPI:
         else:
             return str(uuid.uuid4())
 
-    def fetch_element_nodes(self, url=' '):
+    def fetch_element_nodes(self, url=None):
         """
         The method queries nodes of type elements from the platform.
 
@@ -132,12 +132,10 @@ class FetchAPI:
             }
         })
 
-        req_url = url
-        if len(url.strip()) == 0:
-            req_url = self.DTP_CONFIG.get_api_url('get_find_elements')
+        req_url = self.DTP_CONFIG.get_api_url('get_find_elements') if not url else url
         return self.post_general_request(payload, req_url).json()
 
-    def fetch_asdesigned_nodes(self, url=' '):
+    def fetch_asdesigned_nodes(self, url=None):
         """
         The method queries As-Designed nodes from the platform.
 
@@ -163,12 +161,10 @@ class FetchAPI:
             }
         })
 
-        req_url = url
-        if len(url.strip()) == 0:
-            req_url = self.DTP_CONFIG.get_api_url('get_find_elements')
+        req_url = self.DTP_CONFIG.get_api_url('get_find_elements') if not url else url
         return self.post_general_request(payload, req_url).json()
 
-    def fetch_asbuilt_nodes(self, url=' '):
+    def fetch_asbuilt_nodes(self, url=None):
         """
         The method queries As-Built nodes from the platform.
 
@@ -194,12 +190,10 @@ class FetchAPI:
             }
         })
 
-        req_url = url
-        if len(url.strip()) == 0:
-            req_url = self.DTP_CONFIG.get_api_url('get_find_elements')
+        req_url = self.DTP_CONFIG.get_api_url('get_find_elements') if not url else url
         return self.post_general_request(payload, req_url).json()
 
-    def fetch_construction_nodes(self, url=' '):
+    def fetch_construction_nodes(self, url=None):
         """
         The method queries construction nodes from the platform.
 
@@ -224,12 +218,10 @@ class FetchAPI:
             }
         })
 
-        req_url = url
-        if len(url.strip()) == 0:
-            req_url = self.DTP_CONFIG.get_api_url('get_find_elements')
+        req_url = self.DTP_CONFIG.get_api_url('get_find_elements') if not url else url
         return self.post_general_request(payload, req_url).json()
 
-    def asbuilt_fetch_connected_asdesigned_nodes(self, asbuilt_node_iri, url=' '):
+    def asbuilt_fetch_connected_asdesigned_nodes(self, asbuilt_node_iri, url=None):
         """
         The method fetches as-designed nodes connected to a node identified by node_iri
 
@@ -269,12 +261,10 @@ class FetchAPI:
             "return": "asdesigned"
         })
 
-        req_url = url
-        if len(url.strip()) == 0:
-            req_url = self.DTP_CONFIG.get_api_url('get_find_elements')
+        req_url = self.DTP_CONFIG.get_api_url('get_find_elements') if not url else url
         return self.post_general_request(payload, req_url).json()
 
-    def asdesigned_fetch_connected_task_nodes(self, asdesigned_node_iri, url=' '):
+    def asdesigned_fetch_connected_task_nodes(self, asdesigned_node_iri, url=None):
         """
         The method fetches task nodes connected to a node identified by asdesigned_node_iri
 
@@ -312,12 +302,10 @@ class FetchAPI:
             "return": "tasks"
         })
 
-        req_url = url
-        if len(url.strip()) == 0:
-            req_url = self.DTP_CONFIG.get_api_url('get_find_elements')
+        req_url = self.DTP_CONFIG.get_api_url('get_find_elements') if not url else url
         return self.post_general_request(payload, req_url).json()
 
-    def operation_fetch_connected_activity_nodes(self, oper_node_iri, url=' '):
+    def operation_fetch_connected_activity_nodes(self, oper_node_iri, url=None):
         """
         The method fetches activity nodes connected to an operation node identified by oper_node_iri
 
@@ -355,12 +343,10 @@ class FetchAPI:
             "return": "hasActivity"
         })
 
-        req_url = url
-        if len(url.strip()) == 0:
-            req_url = self.DTP_CONFIG.get_api_url('get_find_elements')
+        req_url = self.DTP_CONFIG.get_api_url('get_find_elements') if not url else url
         return self.post_general_request(payload, req_url).json()
 
-    def task_fetch_connected_activity_nodes(self, task_node_iri, url=' '):
+    def task_fetch_connected_activity_nodes(self, task_node_iri, url=None):
         """
         The method fetches activity nodes connected to a node identified by task_node_iri
 
@@ -398,12 +384,10 @@ class FetchAPI:
             "return": "hasActivity"
         })
 
-        req_url = url
-        if len(url.strip()) == 0:
-            req_url = self.DTP_CONFIG.get_api_url('get_find_elements')
+        req_url = self.DTP_CONFIG.get_api_url('get_find_elements') if not url else url
         return self.post_general_request(payload, req_url).json()
 
-    def activity_fetch_connected_workpackage_nodes(self, activity_node_iri, url=' '):
+    def activity_fetch_connected_workpackage_nodes(self, activity_node_iri, url=None):
         """
         The method fetches workpackage nodes connected to a node identified by activity_node_iri
 
@@ -441,12 +425,10 @@ class FetchAPI:
             "return": "hasWorkPackage"
         })
 
-        req_url = url
-        if len(url.strip()) == 0:
-            req_url = self.DTP_CONFIG.get_api_url('get_find_elements')
+        req_url = self.DTP_CONFIG.get_api_url('get_find_elements') if not url else url
         return self.post_general_request(payload, req_url).json()
 
-    def workpackage_fetch_connected_schedule_nodes(self, workpkg_node_iri, url=' '):
+    def workpackage_fetch_connected_schedule_nodes(self, workpkg_node_iri, url=None):
         """
         The method fetches schedule nodes connected to a node identified by workpkg_node_iri
 
@@ -484,12 +466,10 @@ class FetchAPI:
             "return": "hasSchedule"
         })
 
-        req_url = url
-        if len(url.strip()) == 0:
-            req_url = self.DTP_CONFIG.get_api_url('get_find_elements')
+        req_url = self.DTP_CONFIG.get_api_url('get_find_elements') if not url else url
         return self.post_general_request(payload, req_url).json()
 
-    def construction_fetch_connected_operation_nodes(self, constr_node_iri, url=' '):
+    def construction_fetch_connected_operation_nodes(self, constr_node_iri, url=None):
         """
         The method fetches operation nodes connected to a node identified by constr_node__iri
 
@@ -527,12 +507,10 @@ class FetchAPI:
             "return": "hasOperation"
         })
 
-        req_url = url
-        if len(url.strip()) == 0:
-            req_url = self.DTP_CONFIG.get_api_url('get_find_elements')
+        req_url = self.DTP_CONFIG.get_api_url('get_find_elements') if not url else url
         return self.post_general_request(payload, req_url).json()
 
-    def operation_fetch_connected_action_nodes(self, oper_node_iri, url=' '):
+    def operation_fetch_connected_action_nodes(self, oper_node_iri, url=None):
         """
         The method fetches action nodes connected to a node identified by oper_node_iri
 
@@ -570,12 +548,10 @@ class FetchAPI:
             "return": "hasAction"
         })
 
-        req_url = url
-        if len(url.strip()) == 0:
-            req_url = self.DTP_CONFIG.get_api_url('get_find_elements')
+        req_url = self.DTP_CONFIG.get_api_url('get_find_elements') if not url else url
         return self.post_general_request(payload, req_url).json()
 
-    def action_fetch_connected_asbuilt_nodes(self, action_node_iri, url=' '):
+    def action_fetch_connected_asbuilt_nodes(self, action_node_iri, url=None):
         """
         The method fetches as-built nodes connected to a node identified by action_node_iri
 
@@ -614,9 +590,7 @@ class FetchAPI:
             "return": "asbuilt"
         })
 
-        req_url = url
-        if len(url.strip()) == 0:
-            req_url = self.DTP_CONFIG.get_api_url('get_find_elements')
+        req_url = self.DTP_CONFIG.get_api_url('get_find_elements') if not url else url
         return self.post_general_request(payload, req_url).json()
 
     def fetch_blobs_for_node(self, node_uuid):
