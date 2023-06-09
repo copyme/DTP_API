@@ -29,7 +29,7 @@ class FetchAPI:
         returns dictionary created from JSON
     fetch_construction_nodes(url)
         returns dictionary created from JSON
-    fetch_work_package_nodes(url)
+    fetch_workpackage_nodes(url)
         returns dictionary created from JSON
     fetch_work_package_connected_activity_nodes(wp_node_iri, url)
         returns dictionary created from JSON
@@ -233,7 +233,7 @@ class FetchAPI:
         req_url = self.DTP_CONFIG.get_api_url('get_find_elements') if not url else url
         return self.post_general_request(payload, req_url).json()
 
-    def fetch_work_package_nodes(self, url=None):
+    def fetch_workpackage_nodes(self, url=None):
         """
         The method queries work package nodes from the platform.
 
