@@ -33,7 +33,7 @@ class FetchAPI:
         returns dictionary created from JSON
     fetch_workpackage_connected_activity_nodes(wp_node_iri, url)
         returns dictionary created from JSON
-    fetch_asperformed_connected_asdesigned_op_nodes(asdesigned_node_iri, url)
+    fetch_asperformed_connected_asdesigned_oper_nodes(asdesigned_node_iri, url)
         returns dictionary created from JSON
     fetch_activity_connected_task_nodes(activity_node_iri, url)
         returns dictionary created from JSON
@@ -413,7 +413,7 @@ class FetchAPI:
         req_url = self.DTP_CONFIG.get_api_url('get_find_elements') if not url else url
         return self.post_general_request(payload, req_url).json()
 
-    def fetch_asperformed_connected_asdesigned_op_nodes(self, asdesigned_node_iri, url=None):
+    def fetch_asperformed_connected_asdesigned_oper_nodes(self, asdesigned_node_iri, url=None):
         """
         The method fetches as-performed operation nodes connected to an as-designed node identified with node_iri
 
