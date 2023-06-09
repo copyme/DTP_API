@@ -34,7 +34,8 @@ Currently, the program is using two logs: the general log stored in `DTP_WP3.log
 used or storing information about database changing queries. The second log can be used to revert changes done on the
 database. In order to revert to the last session, it is necessary to call the program with the argument `-r` followed by
 the path to the file. In principle, the database can also be restored from the general log file, but this option has not
-been sufficiently tested.
+been sufficiently tested. `db_session_x.log` will be stored in log path given with `--log_dir` (can be found in
+examples folder).
 
 **Note that, the general log file `DTP_WP3.log`, contains also raw HTTP requests, together with the authentication
 token. Session is logged only for `create_DTP_API` and `link_DTP_API`.**
