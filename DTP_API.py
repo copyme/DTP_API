@@ -45,6 +45,7 @@ class DTPApi(FetchAPI, CountAPI, CreateAPI, LinkAPI, RevertAPI, SendAPI, UpdateA
         None
     init_external_logger(session_logger)
         None
+    TODO: move to a new class all the methods, which are used for sending requests    
     post_general_request(payload, url, headers)
         returns dictionary created from JSON
     general_guarded_request(req_type, payload, url, headers)
