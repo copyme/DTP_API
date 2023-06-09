@@ -1,14 +1,13 @@
 # -*- coding: utf-8 -*-`
 
-# Copyright Inria Sophia Antipolis-Méditerranée 2022. All Rights Reserved.
-# Author: Kacper Pluta <kacper.pluta@inria.fr>
-# This file cannot be used without a written permission from the author(s).
-
-from datetime import datetime
+#  Copyright (c) Sophia Antipolis-Méditerranée, University of Cambridge 2023.
+#  Authors: Kacper Pluta <kacper.pluta@inria.fr>, Alwyn Mathew <am3156@cam.ac.uk>
+#  This file cannot be used without a written permission from the author(s).
 
 import logging
 import logging.config
 import multiprocessing
+from datetime import datetime
 
 
 def get_element_type(DTP_CONFIG, element):
