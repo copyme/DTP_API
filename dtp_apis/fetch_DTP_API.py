@@ -31,7 +31,7 @@ class FetchAPI:
         returns dictionary created from JSON
     fetch_workpackage_nodes(url)
         returns dictionary created from JSON
-    fetch_work_package_connected_activity_nodes(wp_node_iri, url)
+    fetch_workpackage_connected_activity_nodes(wp_node_iri, url)
         returns dictionary created from JSON
     fetch_asperformed_connected_asdesigned_op_nodes(asdesigned_node_iri, url)
         returns dictionary created from JSON
@@ -260,7 +260,7 @@ class FetchAPI:
         req_url = self.DTP_CONFIG.get_api_url('get_find_elements') if not url else url
         return self.post_general_request(payload, req_url).json()
 
-    def fetch_work_package_connected_activity_nodes(self, wp_node_iri, url=None):
+    def fetch_workpackage_connected_activity_nodes(self, wp_node_iri, url=None):
         """
         The method fetches activity nodes connected to a work package node identified by wp_node_iri
 
