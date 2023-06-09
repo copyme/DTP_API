@@ -122,6 +122,8 @@ external configuration file to make the implementation general and easy to maint
 ├── DTP_config.xml                          # DTP configuration file
 ├── examples
 │   ├── count_activity_tasks.py
+│   ├── DTP_WP3.log
+│   ├── fetch_all_activities.py
 │   └── fetch_construction_operation.py
 ├── helpers.py                              # shared functions
 ├── multiprocessing_logging.py              # enables multiprocessing
@@ -133,7 +135,8 @@ external configuration file to make the implementation general and easy to maint
 
 ## Examples
 
-Please see the `examples` folder for sample code to use DTP APIs.
+Please see the `examples` folder for sample code to use DTP APIs. Please note session logging in examples are for
+demonstration, session logger will be only used in `create_DTP_API`, `link_DTP_API` and `update_DTP_API`.
 
 Count task nodes connected to a node identified by `activity_node_iri`
 
