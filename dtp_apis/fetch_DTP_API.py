@@ -41,23 +41,23 @@ class FetchAPI:
         returns dictionary created from JSON
     fetch_activity_nodes(url)
         returns dictionary created from JSON
-    asbuilt_fetch_connected_asdesigned_nodes(asbuilt_node_iri)
+    fetch_asbuilt_connected_asdesigned_nodes(asbuilt_node_iri)
         returns dictionary created from JSON
-    asdesigned_fetch_connected_task_nodes(asdesigned_node_iri, url)
+    fetch_asdesigned_connected_task_nodes(asdesigned_node_iri, url)
         returns dictionary created from JSON
-    operation_fetch_connected_activity_nodes(oper_node_iri, url)
+    fetch_oper_connected_activity_nodes(oper_node_iri, url)
         returns dictionary created from JSON
-    task_fetch_connected_activity_nodes(task_node_iri, url)
+    fetch_task_connected_activity_nodes(task_node_iri, url)
         returns dictionary created from JSON
-    activity_fetch_connected_workpackage_nodes(activity_node_iri, url)
+    fetch_activity_connected_workpackage_nodes(activity_node_iri, url)
         returns dictionary created from JSON
-    workpackage_fetch_connected_schedule_nodes(workpkg_node_iri, url)
+    fetch_workpackage_connected_schedule_nodes(workpkg_node_iri, url)
         returns dictionary created from JSON
-    construction_fetch_connected_operation_nodes(constr_node_iri, url)
+    fetch_construction_connected_oper_nodes(constr_node_iri, url)
         returns dictionary created from JSON
-    operation_fetch_connected_action_nodes(oper_node_iri, url)
+    fetch_oper_connected_action_nodes(oper_node_iri, url)
         returns dictionary created from JSON
-    action_fetch_connected_asbuilt_nodes(action_node_iri, url)
+    fetch_action_connected_asbuilt_nodes(action_node_iri, url)
         returns dictionary created from JSON
     fetch_blobs_for_node(node_uuid)
         returns dictionary created from JSON
@@ -480,7 +480,7 @@ class FetchAPI:
         req_url = self.DTP_CONFIG.get_api_url('get_find_elements') if not url else url
         return self.post_general_request(payload, req_url).json()
 
-    def asbuilt_fetch_connected_asdesigned_nodes(self, asbuilt_node_iri, url=None):
+    def fetch_asbuilt_connected_asdesigned_nodes(self, asbuilt_node_iri, url=None):
         """
         The method fetches as-designed nodes connected to a node identified by node_iri
 
@@ -523,7 +523,7 @@ class FetchAPI:
         req_url = self.DTP_CONFIG.get_api_url('get_find_elements') if not url else url
         return self.post_general_request(payload, req_url).json()
 
-    def asdesigned_fetch_connected_task_nodes(self, asdesigned_node_iri, url=None):
+    def fetch_asdesigned_connected_task_nodes(self, asdesigned_node_iri, url=None):
         """
         The method fetches task nodes connected to a node identified by asdesigned_node_iri
 
@@ -564,7 +564,7 @@ class FetchAPI:
         req_url = self.DTP_CONFIG.get_api_url('get_find_elements') if not url else url
         return self.post_general_request(payload, req_url).json()
 
-    def operation_fetch_connected_activity_nodes(self, oper_node_iri, url=None):
+    def fetch_oper_connected_activity_nodes(self, oper_node_iri, url=None):
         """
         The method fetches activity nodes connected to an operation node identified by oper_node_iri
 
@@ -605,7 +605,7 @@ class FetchAPI:
         req_url = self.DTP_CONFIG.get_api_url('get_find_elements') if not url else url
         return self.post_general_request(payload, req_url).json()
 
-    def task_fetch_connected_activity_nodes(self, task_node_iri, url=None):
+    def fetch_task_connected_activity_nodes(self, task_node_iri, url=None):
         """
         The method fetches activity nodes connected to a node identified by task_node_iri
 
@@ -646,7 +646,7 @@ class FetchAPI:
         req_url = self.DTP_CONFIG.get_api_url('get_find_elements') if not url else url
         return self.post_general_request(payload, req_url).json()
 
-    def activity_fetch_connected_workpackage_nodes(self, activity_node_iri, url=None):
+    def fetch_activity_connected_workpackage_nodes(self, activity_node_iri, url=None):
         """
         The method fetches workpackage nodes connected to a node identified by activity_node_iri
 
@@ -687,7 +687,7 @@ class FetchAPI:
         req_url = self.DTP_CONFIG.get_api_url('get_find_elements') if not url else url
         return self.post_general_request(payload, req_url).json()
 
-    def workpackage_fetch_connected_schedule_nodes(self, workpkg_node_iri, url=None):
+    def fetch_workpackage_connected_schedule_nodes(self, workpkg_node_iri, url=None):
         """
         The method fetches schedule nodes connected to a node identified by workpkg_node_iri
 
@@ -728,7 +728,7 @@ class FetchAPI:
         req_url = self.DTP_CONFIG.get_api_url('get_find_elements') if not url else url
         return self.post_general_request(payload, req_url).json()
 
-    def construction_fetch_connected_operation_nodes(self, constr_node_iri, url=None):
+    def fetch_construction_connected_oper_nodes(self, constr_node_iri, url=None):
         """
         The method fetches operation nodes connected to a node identified by constr_node_iri
 
@@ -769,7 +769,7 @@ class FetchAPI:
         req_url = self.DTP_CONFIG.get_api_url('get_find_elements') if not url else url
         return self.post_general_request(payload, req_url).json()
 
-    def operation_fetch_connected_action_nodes(self, oper_node_iri, url=None):
+    def fetch_oper_connected_action_nodes(self, oper_node_iri, url=None):
         """
         The method fetches action nodes connected to a node identified by oper_node_iri
 
@@ -810,7 +810,7 @@ class FetchAPI:
         req_url = self.DTP_CONFIG.get_api_url('get_find_elements') if not url else url
         return self.post_general_request(payload, req_url).json()
 
-    def action_fetch_connected_asbuilt_nodes(self, action_node_iri, url=None):
+    def fetch_action_connected_asbuilt_nodes(self, action_node_iri, url=None):
         """
         The method fetches as-built nodes connected to a node identified by action_node_iri
 
