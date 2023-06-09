@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-`
-#  Copyright (c) Sophia Antipolis-Méditerranée, University of Cambridge 2023.
+
+#  Copyright (c) Centre Inria d'Université Côte d'Azur, University of Cambridge 2023.
 #  Authors: Kacper Pluta <kacper.pluta@inria.fr>, Alwyn Mathew <am3156@cam.ac.uk>
 #  This file cannot be used without a written permission from the author(s).
 
