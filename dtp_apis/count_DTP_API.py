@@ -13,11 +13,11 @@ class CountAPI:
 
     Methods
     -------
-    activity_count_connected_task_nodes(url)
+    activity_count_connected_task_nodes(activity_node_iri)
         returns dictionary created from JSON
-    asdesigned_count_connected_asbuilt_nodes(url)
+    asdesigned_count_connected_asbuilt_nodes(node_iri)
         returns dictionary created from JSON
-    asbuilt_count_connected_geomdefect_nodes(url)
+    asbuilt_count_connected_geomdefect_nodes(asbuilt_node_iri)
         returns dictionary created from JSON
     """
 

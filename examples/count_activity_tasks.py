@@ -18,7 +18,8 @@ def parse_args():
     """
     Get parameters from user
     """
-    parser = argparse.ArgumentParser(description='Prepare DTP graph')
+    parser = argparse.ArgumentParser(
+        description='Counts task nodes connected to a node identified by activity_node_iri')
     parser.add_argument('--xml_path', '-x', type=str, help='path to config xml file', required=True)
     parser.add_argument('--simulation', '-s', default=False, action='store_true')
     parser.add_argument('--log_dir', '-l', type=str, help='path to log dir', required=True)

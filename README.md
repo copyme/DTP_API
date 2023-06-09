@@ -35,10 +35,10 @@ used or storing information about database changing queries. The second log can 
 database. In order to revert to the last session, it is necessary to call the program with the argument `-r` followed by
 the path to the file. In principle, the database can also be restored from the general log file, but this option has not
 been sufficiently tested. `db_session_x.log` will be stored in log path given with `--log_dir` (can be found in
-examples folder).
+examples scripts).
 
 **Note that, the general log file `DTP_WP3.log`, contains also raw HTTP requests, together with the authentication
-token. Session is logged only for `create_DTP_API` and `link_DTP_API`.**
+token. Session is logged only for `create_DTP_API`, `link_DTP_API` and `update_DTP_API`.**
 
 ### Example of the general log file
 
@@ -145,4 +145,10 @@ Fetch operation nodes connected to a node identified by `constr_node_iri`
 
 ```shell
 python3 fetch_construction_operation.py --xml_path ../DTP_config.xml -l /path/to/logdir
+```
+
+Fetch all activity node in the graph
+
+```shell
+python3 fetch_all_activity.py --xml_path ../DTP_config.xml -l /path/to/logdir
 ```

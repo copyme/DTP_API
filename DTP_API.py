@@ -15,6 +15,7 @@ import logging
 import requests
 import validators
 from file_read_backwards import FileReadBackwards
+from tqdm import tqdm
 
 from DTP_config import DTPConfig
 from dtp_apis.count_DTP_API import CountAPI
@@ -23,10 +24,11 @@ from dtp_apis.fetch_DTP_API import FetchAPI
 from dtp_apis.link_DTP_API import LinkAPI
 from dtp_apis.revert_DTP_API import RevertAPI
 from dtp_apis.send_DTP_API import SendAPI
-from helpers import logger_global
+from dtp_apis.update_DTP_API import UpdateAPI
+from helpers import logger_global, get_info_from_log
 
 
-class DTPApi(FetchAPI, CountAPI, CreateAPI, LinkAPI, RevertAPI, SendAPI):
+class DTPApi(FetchAPI, CountAPI, CreateAPI, LinkAPI, RevertAPI, SendAPI, UpdateAPI):
     """
     Base API class for mixin classes.
 
@@ -80,7 +82,9 @@ class DTPApi(FetchAPI, CountAPI, CreateAPI, LinkAPI, RevertAPI, SendAPI):
 
         other_log_markers = {'link_elem_blob': 'NEW_LINK_ELEMENT_BLOB',
                              'new_blob': 'NEW_BLOB',
-                             'update_asdesigned_param': 'UPDATE_isAsDesigned_PARAM_NODE_OPERATION'}
+                             'update_asdesigned_param': 'UPDATE_isAsDesigned_PARAM_NODE_OPERATION',
+                             'update_operation': 'UPDATE_OPERATION_IRI',
+                             'update_construction': 'UPDATE_CONSTRUCTION_IRI'}
 
         try:
             self.log_markers = self.log_markers_node_classes | other_log_markers
@@ -100,6 +104,7 @@ class DTPApi(FetchAPI, CountAPI, CreateAPI, LinkAPI, RevertAPI, SendAPI):
         """
 
         if len(session_file.strip()) != 0:
+            print(f"Session log file at {session_file}")
             formatter = logging.Formatter('%(asctime)s : %(message)s', datefmt='%d-%b-%y %H:%M:%S')
             handler = logging.FileHandler(session_file)
             handler.setFormatter(formatter)
@@ -251,27 +256,29 @@ class DTPApi(FetchAPI, CountAPI, CreateAPI, LinkAPI, RevertAPI, SendAPI):
         counter = 0
 
         with FileReadBackwards(session_file, encoding="utf-8") as frb:
-            for line in frb:
-                # that will be the last date once the beginning of the file is reached
+            for line in tqdm(frb):
+                # that will be the last date once the beginning of the file is reached.
                 msg_date = line[0: line.find(' : ')]
                 if self.log_markers['link_elem_blob'] in line:
-                    # extract ids from the log
-                    index = line.find(self.log_markers['link_elem_blob'])
-                    ids = line[index + len(self.log_markers['link_elem_blob']) + 1:].strip()
-                    element_uuid = ids.split(',')[0].strip()
-                    blob_uuid = ids.split(',')[1].strip()
-                    counter = counter + 1
+                    element_uuid, blob_uuid = get_info_from_log(line, self.log_markers['link_elem_blob'])
+                    counter += 1
                     self.unlink_node_from_blob(element_uuid, blob_uuid)
                 elif self.log_markers['new_blob'] in line:
-                    index = line.find(self.log_markers['new_blob'])
-                    blob_uuid = line[index + len(self.log_markers['new_blob']) + 1:].strip()
+                    blob_uuid = get_info_from_log(line, self.log_markers['new_blob'])[0]
                     self.delete_blob_from_platform(blob_uuid)
-                    counter = counter + 1
-                elif self.log_markers['update_asdesigned_param'] in l:
-                    index = l.find(self.log_markers['update_asdesigned_param'])
-                    ids = l[index + len(self.log_markers['update_asdesigned_param']) + 1:].strip()
-                    element_iri = ids.split(',')[0].strip()
-                    self.undo_update_asdesigned_param_node(element_iri)
+                    counter += 1
+                elif self.log_markers['update_asdesigned_param'] in line:
+                    element_iri = get_info_from_log(line, self.log_markers['update_asdesigned_param'])[0]
+                    self.delete_asdesigned_param_node(element_iri)
+                    counter += 1
+                elif self.log_markers['update_operation'] in line:
+                    node_iri, dump_path = get_info_from_log(line, self.log_markers['update_operation'])
+                    self.revert_node_update(node_iri, dump_path)
+                    counter += 1
+                elif self.log_markers['update_construction'] in line:
+                    node_iri, dump_path = get_info_from_log(line, self.log_markers['update_construction'])
+                    self.revert_node_update(node_iri, dump_path)
+                    counter += 1
                 else:
                     try:
                         node_class = next(
@@ -295,6 +302,34 @@ class DTPApi(FetchAPI, CountAPI, CreateAPI, LinkAPI, RevertAPI, SendAPI):
                     counter = counter + 1
 
         logger_global.info('The session started at: ' + msg_date + ', has been reverted.')
+
+    def query_all_pages(self, fetch_function, *fetch_function_arg):
+        """
+        The method will query all pages for a query
+
+        Args:
+            fetch_function: function used to query DTP
+            fetch_function_arg: arguments to fetch_function
+
+        Returns:
+
+        """
+        query_response_all_pages = fetch_function(*fetch_function_arg)
+        elements = query_response_all_pages
+
+        while 'next' in elements.keys() and elements['size'] != 0:
+            if len(fetch_function_arg) > 1:
+                elements = fetch_function(*fetch_function_arg, elements['next'])
+            else:
+                elements = fetch_function(elements['next'])
+
+            if elements['size'] <= 0:
+                break
+
+            query_response_all_pages['items'] += elements['items']
+            query_response_all_pages['size'] += elements['size']
+
+        return query_response_all_pages
 
 
 # Below code snippet for testing only
