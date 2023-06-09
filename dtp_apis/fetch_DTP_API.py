@@ -53,7 +53,7 @@ class FetchAPI:
         returns dictionary created from JSON
     fetch_workpackage_connected_schedule_nodes(workpkg_node_iri, url)
         returns dictionary created from JSON
-    fetch_construction_connected_oper_nodes(constr_node_iri, url)
+    fetch_constr_connected_oper_nodes(constr_node_iri, url)
         returns dictionary created from JSON
     fetch_oper_connected_action_nodes(oper_node_iri, url)
         returns dictionary created from JSON
@@ -728,7 +728,7 @@ class FetchAPI:
         req_url = self.DTP_CONFIG.get_api_url('get_find_elements') if not url else url
         return self.post_general_request(payload, req_url).json()
 
-    def fetch_construction_connected_oper_nodes(self, constr_node_iri, url=None):
+    def fetch_constr_connected_oper_nodes(self, constr_node_iri, url=None):
         """
         The method fetches operation nodes connected to a node identified by constr_node_iri
 
