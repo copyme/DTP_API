@@ -1,148 +1,184 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <DTP_config>
-   <NAME>ThingIn</NAME>
-   <VERSION>1.5</VERSION>
-   <DEV_TOKEN type="xs:anyURI">/home/kpluta/Projects/BIM2TWIN-WP3/DTP/integration_v1/token_kpluta.txt</DEV_TOKEN>
-   <DTP_DOMAIN type="xs:anyURI">http://bim2twin.eu/pilot_mislata/</DTP_DOMAIN>
-   <KPI_DOMAIN type="xs:anyURI">http://bim2twin.eu/mislata/kpi/</KPI_DOMAIN>
-   <API_URLS>
-      <URL function="get_find_elements" type="xs:anyURL">https://api.thinginthefuture.bim2twin.eu/avatars/find</URL>
-      <URL function="add_node" type="xs:anyURL">https://api.thinginthefuture.bim2twin.eu/batch/avatars</URL>
-      <URL function="count_nodes" type="xs:anyURL">https://api.thinginthefuture.bim2twin.eu/avatars/count</URL>
-      <URL function="get_blobs_per_element" type="xs:anyURL">https://api.thinginthefuture.bim2twin.eu/avatars/_ID_/blobs</URL>
-      <URL function="delete_avatar" type="xs:anyURL">https://api.thinginthefuture.bim2twin.eu/avatars/_ID_</URL>
-      <URL function="download_blob" type="xs:anyURL">https://api.thinginthefuture.bim2twin.eu/blobs/_ID_/download</URL>
-      <URL function="send_blob" type="xs:anyURL">https://api.thinginthefuture.bim2twin.eu/blobs</URL>
-      <URL function="delete_blob" type="xs:anyURL">https://api.thinginthefuture.bim2twin.eu/blobs/_ID_</URL>
-      <URL function="link_blob" type="xs:anyURL">https://api.thinginthefuture.bim2twin.eu/blobs/link</URL>
-      <URL function="unlink_blob" type="xs:anyURL">https://api.thinginthefuture.bim2twin.eu/blobs/unlink</URL>
-      <URL function="update_set" type="xs:anyURL">https://api.thinginthefuture.bim2twin.eu/batch/avatars/update/set</URL>
-      <URL function="update_unset" type="xs:anyURL">https://api.thinginthefuture.bim2twin.eu/batch/avatars/update/unset</URL>
-   </API_URLS>
-   <ONTOLOGY_URIS>
-      <URI function="isAsDesigned" type="xs:anyURI">https://www.bim2twin.eu/ontology/Core#isAsDesigned</URI>
-      <URI function="progress" type="xs:anyURI">https://www.bim2twin.eu/ontology/Core#progress</URI>
-      <URI function="timeStamp" type="xs:anyURI">https://www.bim2twin.eu/ontology/Core#timeStamp</URI>
-      <URI function="id" type="xs:anyURI">https://www.bim2twin.eu/ontology/Core#id</URI>
-      <URI function="hasElementType" type="xs:anyURI">https://www.bim2twin.eu/ontology/Core#hasElementType</URI>
-      <URI function="hasGeometryStatusType" type="xs:anyURI">https://www.bim2twin.eu/ontology/Core#hasGeometryStatusType</URI>
-      <URI function="CompletelyDetected" type="xs:anyURI">https://www.bim2twin.eu/ontology/Core#CompletelyDetected</URI>
-      <URI function="intentStatusRelation" type="xs:anyURI">https://www.bim2twin.eu/ontology/Core#intentStatusRelation</URI>
-      <URI function="hasDefectType" type="xs:anyURI">https://www.bim2twin.eu/ontology/CoreExtension#hasDefectType</URI>
-      <URI function="defect_criticality" type="xs:anyURI">https://www.bim2twin.eu/ontology/CoreExtension#criticality</URI>
-      <URI function="defect_class_volumetric" type="xs:anyURI">https://www.bim2twin.eu/ontology/CoreExtension#VolumetricDefect</URI>
-      <URI function="hasGeometricDefect" type="xs:anyURI">https://www.bim2twin.eu/ontology/CoreExtension#hasGeometricDefect</URI>
-      <URI function="GeometricDefect" type="xs:anyURI">https://www.bim2twin.eu/ontology/CoreExtension#GeometricDefect</URI>
-      <URI function="PositionDefect" type="xs:anyURI">https://www.bim2twin.eu/ontology/CoreExtension#PositionDefect</URI>
-      <URI function="AxisOffset" type="xs:anyURI">https://www.bim2twin.eu/ontology/CoreExtension#AxisOffset</URI>
-      <URI function="classElement" type="xs:anyURI">https://w3id.org/bot#Element</URI>
-      <URI function="hasTarget" type="xs:anyURI">https://www.bim2twin.eu/ontology/Core#hasTarget</URI>
-      <URI function="task" type="xs:anyURI">https://www.bim2twin.eu/ontology/Core#Task</URI>
-      <URI function="hasTask" type="xs:anyURI">https://www.bim2twin.eu/ontology/Core#hasTask</URI>
-      <URI function="activity" type="xs:anyURI">https://www.bim2twin.eu/ontology/Core#Activity</URI>
-      <URI function="asPerformedOperation" type="xs:anyURI">https://www.bim2twin.eu/ontology/Core#Operation</URI>
-      <URI function="hasTaskType" type="xs:anyURI">https://www.bim2twin.eu/ontology/Core#hasTaskType</URI>
-      <URI function="processStart" type="xs:anyURI">https://www.bim2twin.eu/ontology/Core#processStart</URI>
-      <URI function="processEnd" type="xs:anyURI">https://www.bim2twin.eu/ontology/Core#processEnd</URI>
-      <URI function="asPerformedAction" type="xs:anyURI">https://www.bim2twin.eu/ontology/Core#Action</URI>
-      <URI function="constructionContractor" type="xs:anyURI">https://www.bim2twin.eu/ontology/Core#constructionContractor</URI>
-      <URI function="plannedStart" type="xs:anyURI">https://www.bim2twin.eu/ontology/Core#plannedStart</URI>
-      <URI function="plannedEnd" type="xs:anyURI">https://www.bim2twin.eu/ontology/Core#plannedEnd</URI>
-      <URI function="hasActivity" type="xs:anyURI">https://www.bim2twin.eu/ontology/Core#hasActivity</URI>
-      <URI function="hasAction" type="xs:anyURI">https://www.bim2twin.eu/ontology/Core#hasAction</URI>
-      <URI function="workpackage" type="xs:anyURI">https://www.bim2twin.eu/ontology/Core#WorkPackage</URI>
-      <URI function="asPerformedConstruction" type="xs:anyURI">https://www.bim2twin.eu/ontology/Core#Construction</URI>
-      <URI function="hasProductionMethodType" type="xs:anyURI">https://www.bim2twin.eu/ontology/Core#hasProductionMethodType</URI>
-      <URI function="hasOperation" type="xs:anyURI">https://www.bim2twin.eu/ontology/Core#hasOperation</URI>
-      <URI function="hasWorkPackage" type="xs:anyURI">https://www.bim2twin.eu/ontology/CoreExtension#hasWorkPackage</URI>
-      <URI function="hasConstruction" type="xs:anyURI">https://www.bim2twin.eu/ontology/CoreExtension#hasConstruction</URI>
-      <URI function="constructionSchedule" type="xs:anyURI">https://www.bim2twin.eu/ontology/CoreExtension#ConstructionSchedule</URI>
-      <URI function="kpiNumberOfDefectsPerWork" type="xs:anyURI">https://www.bim2twin.eu/ontology/kpi/NumberOfDefectsPerWork</URI>
-      <URI function="kpiZeroDefectWork" type="xs:anyURI">https://www.bim2twin.eu/ontology/kpi/ZeroDefectWork</URI>
-      <URI function="kpiValue" type="xs:anyURI">https://www.bim2twin.eu/ontology/kpi/kpiValue</URI>
-      <URI function="kpiSampleQuantity" type="xs:anyURI">https://www.bim2twin.eu/ontology/kpi/sampleQuantity</URI>
-      <URI function="kpiReferenceQuantity" type="xs:anyURI">https://www.bim2twin.eu/ontology/kpi/referenceQuantity</URI>
-      <URI function="kpiIntervalStartDate" type="xs:anyURI">https://www.bim2twin.eu/ontology/kpi/intervalStartDate</URI>
-      <URI function="kpiIntervalEndDate" type="xs:anyURI">https://www.bim2twin.eu/ontology/kpi/intervalEndDate</URI>
-      <URI function="kpiHasTaskType" type="xs:anyURI">https://www.bim2twin.eu/ontology/kpi/hasTaskType</URI>
-   </ONTOLOGY_URIS>
-   <OBJECT_TYPES>
-      <OBJECT_TYPE field="https://www.bim2twin.eu/ontology/Core#hasElementType">https://www.bim2twin.eu/ontology/Core#Wall</OBJECT_TYPE>
-      <OBJECT_TYPE field="ifc:Class">IfcWall</OBJECT_TYPE>
-      <OBJECT_TYPE field="ifc:Class">IfcWallStandardCase</OBJECT_TYPE>
-      <OBJECT_TYPE field="ifc:Class">IfcColumn</OBJECT_TYPE>
-   </OBJECT_TYPES>
-   <OBJECT_TYPE_CONVERSIONS>
-      <CONVERSION from="IfcWall" to="https://www.bim2twin.eu/ontology/Core#Wall" />
-      <CONVERSION from="IfcWallStandardCase" to="https://www.bim2twin.eu/ontology/Core#Wall" />
-      <CONVERSION from="IfcColumn" to="https://www.bim2twin.eu/ontology/Core#Column" />
-   </OBJECT_TYPE_CONVERSIONS>
-   <METHODS>
-      <METHOD>
-         <NAME>mesh2pcd</NAME>
-         <EXE input_file_types="ply" output_file_types="ply" Windows="mesh2pcd.exe" />
-         <PATH type="xs:anyURI">C:\Users\kpluta\Projects\BIM2TWIN-WP3\DTP\bin</PATH>
-         <PARAMS>
-            <INPUT type="xs:string" arg="-i">external</INPUT>
-            <OUTPUT type="xs:string" arg="-o">external</OUTPUT>
-            <SAMPLING_DENSITY type="xs:float" arg="-d">1000</SAMPLING_DENSITY>
-         </PARAMS>
-      </METHOD>
-      <METHOD>
-         <NAME>presence</NAME>
-         <EXE input_file_types="ply" output_file_types="csv" Windows="presence.exe" />
-         <PATH type="xs:anyURI">C:\Users\kpluta\Projects\BIM2TWIN-WP3\DTP\bin</PATH>
-         <PARAMS>
-            <INPUT type="xs:string" arg="-i">external</INPUT>
-            <INPUT_MODEL type="xs:string" arg="-I">external</INPUT_MODEL>
-            <CLUSTER type="xs:string" arg="-l">external</CLUSTER>
-            <SINGLE_MODE_FLAG type="xs:flag" arg="-S" />
-         </PARAMS>
-      </METHOD>
-      <METHOD>
-         <NAME>pcd2obb</NAME>
-         <EXE input_file_types="ply" output_file_types="csv" Windows="pcd2obb.exe" />
-         <PATH type="xs:anyURI">C:\Users\kpluta\Projects\BIM2TWIN-WP3\DTP\bin</PATH>
-         <PARAMS>
-            <INPUT type="xs:string" arg="-i">external</INPUT>
-            <OUTPUT type="xs:string" arg="-o">external</OUTPUT>
-            <OUTPUT_MESH type="xs:string" arg="-m">external</OUTPUT_MESH>
-         </PARAMS>
-      </METHOD>
-      <METHOD>
-         <NAME>PCA_info</NAME>
-         <EXE input_file_types="ply" output_file_types="csv" Windows="PCA_info.exe" />
-         <PATH type="xs:anyURI">C:\Users\kpluta\Projects\BIM2TWIN-WP3\DTP\bin</PATH>
-         <PARAMS>
-            <INPUT type="xs:string" arg="-i">external</INPUT>
-            <OUTPUT type="xs:string" arg="-o">external</OUTPUT>
-         </PARAMS>
-      </METHOD>
-   </METHODS>
-   <KPIS>
-      <KPI indicator_type="defect">
-         <OBJECT_CLASSES>
-            <CLASS name="IfcColumn" />
-            <CLASS name="https://www.bim2twin.eu/ontology/Core#Column" />
-         </OBJECT_CLASSES>
-         <DEFECT type="displacement" computation_strategy="as_designed-vs-as_built" />
-         <VALUE_RANGE_MAPS>
-            <RANGE lower_bound="0" upper_bound="0.05" type="good" />
-            <RANGE lower_bound="0.05" upper_bound="0.15" type="acceptable" />
-            <RANGE lower_bound="0.15" upper_bound="infinity" type="unacceptable" />
-         </VALUE_RANGE_MAPS>
-      </KPI>
-      <KPI indicator_type="defect">
-         <OBJECT_CLASSES>
-            <CLASS name="IfcColumn" />
-            <CLASS name="https://www.bim2twin.eu/ontology/Core#Column" />
-         </OBJECT_CLASSES>
-         <DEFECT type="axis_deviation" computation_strategy="as_designed-vs-as_built" />
-         <VALUE_RANGE_MAPS>
-            <RANGE lower_bound="0" upper_bound="3" type="good" />
-            <RANGE lower_bound="3" upper_bound="10" type="acceptable" />
-            <RANGE lower_bound="10" upper_bound="infinity" type="unacceptable" />
-         </VALUE_RANGE_MAPS>
-      </KPI>
-   </KPIS>
+    <NAME>ThingIn</NAME>
+    <VERSION>1.5</VERSION>
+    <DEV_TOKEN type="xs:anyURI">/path/to/token/file</DEV_TOKEN>
+    <DTP_DOMAIN type="xs:anyURI">http://bim2twin.eu/domain_x/</DTP_DOMAIN>
+    <KPI_DOMAIN type="xs:anyURI">http://bim2twin.eu/domain_x/kpi/</KPI_DOMAIN>
+    <API_URLS>
+        <URL function="get_find_elements" type="xs:anyURL">https://api.thinginthefuture.bim2twin.eu/avatars/find</URL>
+        <URL function="add_node" type="xs:anyURL">https://api.thinginthefuture.bim2twin.eu/batch/avatars</URL>
+        <URL function="count_nodes" type="xs:anyURL">https://api.thinginthefuture.bim2twin.eu/avatars/count</URL>
+        <URL function="get_blobs_per_element" type="xs:anyURL">
+            https://api.thinginthefuture.bim2twin.eu/avatars/_ID_/blobs
+        </URL>
+        <URL function="delete_avatar" type="xs:anyURL">https://api.thinginthefuture.bim2twin.eu/avatars/_ID_</URL>
+        <URL function="download_blob" type="xs:anyURL">https://api.thinginthefuture.bim2twin.eu/blobs/_ID_/download
+        </URL>
+        <URL function="send_blob" type="xs:anyURL">https://api.thinginthefuture.bim2twin.eu/blobs</URL>
+        <URL function="delete_blob" type="xs:anyURL">https://api.thinginthefuture.bim2twin.eu/blobs/_ID_</URL>
+        <URL function="link_blob" type="xs:anyURL">https://api.thinginthefuture.bim2twin.eu/blobs/link</URL>
+        <URL function="unlink_blob" type="xs:anyURL">https://api.thinginthefuture.bim2twin.eu/blobs/unlink</URL>
+        <URL function="update_set" type="xs:anyURL">https://api.thinginthefuture.bim2twin.eu/batch/avatars/update/set
+        </URL>
+        <URL function="update_unset" type="xs:anyURL">
+            https://api.thinginthefuture.bim2twin.eu/batch/avatars/update/unset
+        </URL>
+    </API_URLS>
+    <ONTOLOGY_URIS>
+        <URI function="isAsDesigned" type="xs:anyURI">https://www.bim2twin.eu/ontology/Core#isAsDesigned</URI>
+        <URI function="progress" type="xs:anyURI">https://www.bim2twin.eu/ontology/Core#progress</URI>
+        <URI function="timeStamp" type="xs:anyURI">https://www.bim2twin.eu/ontology/Core#timeStamp</URI>
+        <URI function="id" type="xs:anyURI">https://www.bim2twin.eu/ontology/Core#id</URI>
+        <URI function="hasElementType" type="xs:anyURI">https://www.bim2twin.eu/ontology/Core#hasElementType</URI>
+        <URI function="hasGeometryStatusType" type="xs:anyURI">
+            https://www.bim2twin.eu/ontology/Core#hasGeometryStatusType
+        </URI>
+        <URI function="CompletelyDetected" type="xs:anyURI">https://www.bim2twin.eu/ontology/Core#CompletelyDetected
+        </URI>
+        <URI function="intentStatusRelation" type="xs:anyURI">
+            https://www.bim2twin.eu/ontology/Core#intentStatusRelation
+        </URI>
+        <URI function="hasDefectType" type="xs:anyURI">https://www.bim2twin.eu/ontology/CoreExtension#hasDefectType
+        </URI>
+        <URI function="defect_criticality" type="xs:anyURI">https://www.bim2twin.eu/ontology/CoreExtension#criticality
+        </URI>
+        <URI function="defect_class_volumetric" type="xs:anyURI">
+            https://www.bim2twin.eu/ontology/CoreExtension#VolumetricDefect
+        </URI>
+        <URI function="hasGeometricDefect" type="xs:anyURI">
+            https://www.bim2twin.eu/ontology/CoreExtension#hasGeometricDefect
+        </URI>
+        <URI function="GeometricDefect" type="xs:anyURI">
+            https://www.bim2twin.eu/ontology/CoreExtension#GeometricDefect
+        </URI>
+        <URI function="PositionDefect" type="xs:anyURI">https://www.bim2twin.eu/ontology/CoreExtension#PositionDefect
+        </URI>
+        <URI function="AxisOffset" type="xs:anyURI">https://www.bim2twin.eu/ontology/CoreExtension#AxisOffset</URI>
+        <URI function="classElement" type="xs:anyURI">https://w3id.org/bot#Element</URI>
+        <URI function="hasTarget" type="xs:anyURI">https://www.bim2twin.eu/ontology/Core#hasTarget</URI>
+        <URI function="task" type="xs:anyURI">https://www.bim2twin.eu/ontology/Core#Task</URI>
+        <URI function="hasTask" type="xs:anyURI">https://www.bim2twin.eu/ontology/Core#hasTask</URI>
+        <URI function="activity" type="xs:anyURI">https://www.bim2twin.eu/ontology/Core#Activity</URI>
+        <URI function="asPerformedOperation" type="xs:anyURI">https://www.bim2twin.eu/ontology/Core#Operation</URI>
+        <URI function="hasTaskType" type="xs:anyURI">https://www.bim2twin.eu/ontology/Core#hasTaskType</URI>
+        <URI function="processStart" type="xs:anyURI">https://www.bim2twin.eu/ontology/Core#processStart</URI>
+        <URI function="processEnd" type="xs:anyURI">https://www.bim2twin.eu/ontology/Core#processEnd</URI>
+        <URI function="asPerformedAction" type="xs:anyURI">https://www.bim2twin.eu/ontology/Core#Action</URI>
+        <URI function="constructionContractor" type="xs:anyURI">
+            https://www.bim2twin.eu/ontology/Core#constructionContractor
+        </URI>
+        <URI function="plannedStart" type="xs:anyURI">https://www.bim2twin.eu/ontology/Core#plannedStart</URI>
+        <URI function="plannedEnd" type="xs:anyURI">https://www.bim2twin.eu/ontology/Core#plannedEnd</URI>
+        <URI function="hasActivity" type="xs:anyURI">https://www.bim2twin.eu/ontology/Core#hasActivity</URI>
+        <URI function="hasAction" type="xs:anyURI">https://www.bim2twin.eu/ontology/Core#hasAction</URI>
+        <URI function="workpackage" type="xs:anyURI">https://www.bim2twin.eu/ontology/Core#WorkPackage</URI>
+        <URI function="asPerformedConstruction" type="xs:anyURI">https://www.bim2twin.eu/ontology/Core#Construction
+        </URI>
+        <URI function="hasProductionMethodType" type="xs:anyURI">
+            https://www.bim2twin.eu/ontology/Core#hasProductionMethodType
+        </URI>
+        <URI function="hasOperation" type="xs:anyURI">https://www.bim2twin.eu/ontology/Core#hasOperation</URI>
+        <URI function="hasWorkPackage" type="xs:anyURI">https://www.bim2twin.eu/ontology/CoreExtension#hasWorkPackage
+        </URI>
+        <URI function="hasConstruction" type="xs:anyURI">
+            https://www.bim2twin.eu/ontology/CoreExtension#hasConstruction
+        </URI>
+        <URI function="constructionSchedule" type="xs:anyURI">
+            https://www.bim2twin.eu/ontology/CoreExtension#ConstructionSchedule
+        </URI>
+        <URI function="kpiNumberOfDefectsPerWork" type="xs:anyURI">
+            https://www.bim2twin.eu/ontology/kpi/NumberOfDefectsPerWork
+        </URI>
+        <URI function="kpiZeroDefectWork" type="xs:anyURI">https://www.bim2twin.eu/ontology/kpi/ZeroDefectWork</URI>
+        <URI function="kpiValue" type="xs:anyURI">https://www.bim2twin.eu/ontology/kpi/kpiValue</URI>
+        <URI function="kpiSampleQuantity" type="xs:anyURI">https://www.bim2twin.eu/ontology/kpi/sampleQuantity</URI>
+        <URI function="kpiReferenceQuantity" type="xs:anyURI">https://www.bim2twin.eu/ontology/kpi/referenceQuantity
+        </URI>
+        <URI function="kpiIntervalStartDate" type="xs:anyURI">https://www.bim2twin.eu/ontology/kpi/intervalStartDate
+        </URI>
+        <URI function="kpiIntervalEndDate" type="xs:anyURI">https://www.bim2twin.eu/ontology/kpi/intervalEndDate</URI>
+        <URI function="kpiHasTaskType" type="xs:anyURI">https://www.bim2twin.eu/ontology/kpi/hasTaskType</URI>
+    </ONTOLOGY_URIS>
+    <OBJECT_TYPES>
+        <OBJECT_TYPE field="https://www.bim2twin.eu/ontology/Core#hasElementType">
+            https://www.bim2twin.eu/ontology/Core#Wall
+        </OBJECT_TYPE>
+        <OBJECT_TYPE field="ifc:Class">IfcWall</OBJECT_TYPE>
+        <OBJECT_TYPE field="ifc:Class">IfcWallStandardCase</OBJECT_TYPE>
+        <OBJECT_TYPE field="ifc:Class">IfcColumn</OBJECT_TYPE>
+    </OBJECT_TYPES>
+    <OBJECT_TYPE_CONVERSIONS>
+        <CONVERSION from="IfcWall" to="https://www.bim2twin.eu/ontology/Core#Wall"/>
+        <CONVERSION from="IfcWallStandardCase" to="https://www.bim2twin.eu/ontology/Core#Wall"/>
+        <CONVERSION from="IfcColumn" to="https://www.bim2twin.eu/ontology/Core#Column"/>
+    </OBJECT_TYPE_CONVERSIONS>
+    <METHODS>
+        <METHOD>
+            <NAME>mesh2pcd</NAME>
+            <EXE input_file_types="ply" output_file_types="ply" Windows="mesh2pcd.exe"/>
+            <PATH type="xs:anyURI">path/to/DTP/bin</PATH>
+            <PARAMS>
+                <INPUT type="xs:string" arg="-i">external</INPUT>
+                <OUTPUT type="xs:string" arg="-o">external</OUTPUT>
+                <SAMPLING_DENSITY type="xs:float" arg="-d">1000</SAMPLING_DENSITY>
+            </PARAMS>
+        </METHOD>
+        <METHOD>
+            <NAME>presence</NAME>
+            <EXE input_file_types="ply" output_file_types="csv" Windows="presence.exe"/>
+            <PATH type="xs:anyURI">path/to/DTP/bin</PATH>
+            <PARAMS>
+                <INPUT type="xs:string" arg="-i">external</INPUT>
+                <INPUT_MODEL type="xs:string" arg="-I">external</INPUT_MODEL>
+                <CLUSTER type="xs:string" arg="-l">external</CLUSTER>
+                <SINGLE_MODE_FLAG type="xs:flag" arg="-S"/>
+            </PARAMS>
+        </METHOD>
+        <METHOD>
+            <NAME>pcd2obb</NAME>
+            <EXE input_file_types="ply" output_file_types="csv" Windows="pcd2obb.exe"/>
+            <PATH type="xs:anyURI">path/to/DTP/bin</PATH>
+            <PARAMS>
+                <INPUT type="xs:string" arg="-i">external</INPUT>
+                <OUTPUT type="xs:string" arg="-o">external</OUTPUT>
+                <OUTPUT_MESH type="xs:string" arg="-m">external</OUTPUT_MESH>
+            </PARAMS>
+        </METHOD>
+        <METHOD>
+            <NAME>PCA_info</NAME>
+            <EXE input_file_types="ply" output_file_types="csv" Windows="PCA_info.exe"/>
+            <PATH type="xs:anyURI">path/to/DTP/bin</PATH>
+            <PARAMS>
+                <INPUT type="xs:string" arg="-i">external</INPUT>
+                <OUTPUT type="xs:string" arg="-o">external</OUTPUT>
+            </PARAMS>
+        </METHOD>
+    </METHODS>
+    <KPIS>
+        <KPI indicator_type="defect">
+            <OBJECT_CLASSES>
+                <CLASS name="IfcColumn"/>
+                <CLASS name="https://www.bim2twin.eu/ontology/Core#Column"/>
+            </OBJECT_CLASSES>
+            <DEFECT type="displacement" computation_strategy="as_designed-vs-as_built"/>
+            <VALUE_RANGE_MAPS>
+                <RANGE lower_bound="0" upper_bound="0.05" type="good"/>
+                <RANGE lower_bound="0.05" upper_bound="0.15" type="acceptable"/>
+                <RANGE lower_bound="0.15" upper_bound="infinity" type="unacceptable"/>
+            </VALUE_RANGE_MAPS>
+        </KPI>
+        <KPI indicator_type="defect">
+            <OBJECT_CLASSES>
+                <CLASS name="IfcColumn"/>
+                <CLASS name="https://www.bim2twin.eu/ontology/Core#Column"/>
+            </OBJECT_CLASSES>
+            <DEFECT type="axis_deviation" computation_strategy="as_designed-vs-as_built"/>
+            <VALUE_RANGE_MAPS>
+                <RANGE lower_bound="0" upper_bound="3" type="good"/>
+                <RANGE lower_bound="3" upper_bound="10" type="acceptable"/>
+                <RANGE lower_bound="10" upper_bound="infinity" type="unacceptable"/>
+            </VALUE_RANGE_MAPS>
+        </KPI>
+    </KPIS>
 </DTP_config>

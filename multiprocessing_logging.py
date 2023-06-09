@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-`
 
-# Copyright Inria Sophia Antipolis-Méditerranée 2022. All Rights Reserved.
-# Author: Kacper Pluta <kacper.pluta@inria.fr>
-# This file cannot be used without a written permission from the author(s).
+#  Copyright (c) Sophia Antipolis-Méditerranée.
+#  Authors: Kacper Pluta <kacper.pluta@inria.fr>
+#  This file cannot be used without a written permission from the author(s).
 
 # based on https://www.jamesfheath.com/2020/06/logging-in-python-while-multiprocessing.html and
 # https://docs.python.org/3/howto/logging-cookbook.html#logging-to-a-single-file-from-multiple-processes
@@ -10,14 +10,13 @@
 
 import logging
 import logging.handlers
-import multiprocessing
-from os import path
 import sys
 import traceback
+from os import path
 
 
-def listener_configurer(log_name, log_file_path,
-                        fmtr=logging.Formatter('%(asctime)s : %(message)s', datefmt='%d-%b-%y %H:%M:%S')):
+def listener_configurer(log_name, log_file_path,fmtr=logging.Formatter('%(asctime)s : %(message)s',
+                                                                       datefmt='%d-%b-%y %H:%M:%S')):
     """ Configures and returns a log file based on 
     the given name
 

@@ -1,12 +1,13 @@
 # -*- coding: utf-8 -*-`
 
-# Copyright Inria Sophia Antipolis-Méditerranée 2022. All Rights Reserved.
-# Author: Kacper Pluta <kacper.pluta@inria.fr>, Alwyn Mathew <am3156@cam.ac.uk>
-# This file cannot be used without a written permission from the author(s).
+#  Copyright (c) Sophia Antipolis-Méditerranée, University of Cambridge 2023.
+#  Authors: Kacper Pluta <kacper.pluta@inria.fr>, Alwyn Mathew <am3156@cam.ac.uk>
+#  This file cannot be used without a written permission from the author(s).
 
 import json
 
 import requests
+
 from helpers import logger_global
 
 
