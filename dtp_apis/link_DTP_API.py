@@ -15,19 +15,19 @@ class LinkAPI:
 
     Methods
     -------
-    link_nodes_element_to_blob(node_uuid, blob_uuid)
+    link_node_element_to_blob(node_uuid, blob_uuid)
         returns bool, True if success and False otherwise
-    link_nodes_element_to_defect(element_node_iri, defect_node_iri)
+    link_node_element_to_defect(element_node_iri, defect_node_iri)
         returns bool, True if success and False otherwise
-    link_nodes_operation_to_action(oper_node_iri, action_node_iri)
+    link_node_operation_to_action(oper_node_iri, action_node_iri)
         returns bool, True if success and False otherwise
-    link_nodes_schedule_to_constr(schedule_node_iri, constr_node_iri)
+    link_node_schedule_to_constr(schedule_node_iri, constr_node_iri)
         returns bool, True if success and False otherwise
-    link_nodes_constr_to_operation(constr_node_iri, oper_node_iri)
+    link_node_constr_to_operation(constr_node_iri, oper_node_iri)
         returns bool, True if success and False otherwise
     """
 
-    def link_nodes_element_to_blob(self, node_uuid, blob_uuid):
+    def link_node_element_to_blob(self, node_uuid, blob_uuid):
         """
         The method links a blob to an element.
 
@@ -61,7 +61,7 @@ class LinkAPI:
                 return False
         return True
 
-    def link_nodes_element_to_defect(self, element_node_iri, defect_node_iri):
+    def link_node_element_to_defect(self, element_node_iri, defect_node_iri):
         """
         The method links a defect with an element.
 
@@ -99,7 +99,7 @@ class LinkAPI:
                 return False
         return True
 
-    def link_nodes_operation_to_action(self, oper_node_iri, action_node_iri):
+    def link_node_operation_to_action(self, oper_node_iri, action_node_iri):
         """
         The method links an action with an operation.
 
@@ -137,7 +137,7 @@ class LinkAPI:
                 return False
         return True
 
-    def link_nodes_schedule_to_constr(self, schedule_node_iri, constr_node_iri):
+    def link_node_schedule_to_constr(self, schedule_node_iri, constr_node_iri):
         """
         The method links a construction with a schedule.
 
@@ -175,7 +175,7 @@ class LinkAPI:
                 return False
         return True
 
-    def link_nodes_constr_to_operation(self, constr_node_iri, oper_node_iri):
+    def link_node_constr_to_operation(self, constr_node_iri, oper_node_iri):
         """
         The method links a operation with a construction.
 
