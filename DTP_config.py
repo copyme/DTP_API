@@ -38,6 +38,8 @@ class DTPConfig:
         the corresponding ontology URI
     get_token()
         return the developer token
+    get_kpi_domain()
+        returns the KPI domain
     get_domain()
         returns the DTP domain
     get_version()
