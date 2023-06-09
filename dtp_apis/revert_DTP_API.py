@@ -97,7 +97,7 @@ class RevertAPI:
             }
         )
 
-        response = self.post_guarded_request(payload=payload, url=self.DTP_CONFIG.get_api_url('add_node'))
+        response = self.post_guarded_request(payload=payload, url=self.DTP_CONFIG.get_api_url('delete_avatar_iri'))
         if not self.simulation_mode:
             if response.ok:
                 logger_global.info("The node: " + node_iri + ", has been deleted.")
