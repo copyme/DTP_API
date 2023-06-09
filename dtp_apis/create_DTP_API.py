@@ -22,7 +22,7 @@ class CreateAPI:
         returns bool, True if success and False otherwise
     create_defect_node(defect_class, defect_node_iri, defect_criticality, timestamp, defect_type)
         returns bool, True if success and False otherwise
-    create_kpi_nodefectsperwork(kpi_node_iri, task_type, value, ref_quant, sampl_quant, inter_start_date,
+    create_kpi_node_defectsperwork(kpi_node_iri, task_type, value, ref_quant, sampl_quant, inter_start_date,
                                     inter_end_date)
         returns bool, True if success and False otherwise
     create_action_node(task_type, action_node_iri, task_iri, target_as_built_iri, contractor, process_start,
@@ -176,7 +176,7 @@ class CreateAPI:
                 return False
         return True
 
-    def create_kpi_nodefectsperwork(self, kpi_node_iri, task_type, value, ref_quant, sampl_quant, inter_start_date,
+    def create_kpi_node_defectsperwork(self, kpi_node_iri, task_type, value, ref_quant, sampl_quant, inter_start_date,
                                     inter_end_date):
 
         if not validators.url(kpi_node_iri):
