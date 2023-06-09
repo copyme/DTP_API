@@ -60,6 +60,28 @@ def convert_str_dtp_format_datetime(strdate):
         Exception('Empty string cannot be converted.')
 
 
+def get_info_from_log(line, marker):
+    """
+    Extract info from log lines
+
+    Parameters
+    ----------
+    line: str
+        Log line
+    marker: str
+        Log marker
+
+    Returns
+    -------
+    list
+        List of each info
+
+    """
+    index = line.find(marker)
+    ids = line[index + len(marker) + 1:].strip()
+    return [x.strip() for x in ids.split(',')]
+
+
 def read_ply_collection_date(ply_path):
     comment_date_begin = 'comment collected'
     file = open(ply_path, 'r')

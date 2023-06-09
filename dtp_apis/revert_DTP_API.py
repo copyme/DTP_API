@@ -7,6 +7,7 @@
 import json
 
 import requests
+import validators
 
 from helpers import logger_global
 
@@ -17,6 +18,10 @@ class RevertAPI:
 
     Methods
     -------
+    delete_node_from_graph(node_uuid)
+        returns bool, True if success and False otherwise
+    delete_node_from_graph_with_iri(node_iri)
+        returns bool, True if success and False otherwise
     unlink_node_from_blob(node_uuid, blob_uuid)
         returns bool, True if success and False otherwise
     delete_blob_from_platform(blob_uuid)
@@ -64,6 +69,42 @@ class RevertAPI:
             else:
                 logger_global.error(
                     "The node: " + node_uuid + ", cannot be deleted. Status code: " + str(response.status_code))
+                return False
+        return True
+
+    def delete_node_from_graph_with_iri(self, node_iri):
+        """
+        The method deletes a node from DTP.
+
+        Parameters
+        ----------
+        node_iri : str, obligatory
+            a valid iri of a node to remove.
+
+        Returns
+        ------
+        bool
+            True if an element has been deleted and False otherwise
+        """
+
+        if not validators.url(node_iri):
+            raise Exception("Sorry, the target IRI is not a valid URL.")
+
+        payload = json.dumps(
+            {
+                "_domain": self.DTP_CONFIG.get_domain(),
+                "_iri": node_iri
+            }
+        )
+
+        response = self.post_guarded_request(payload=payload, url=self.DTP_CONFIG.get_api_url('add_node'))
+        if not self.simulation_mode:
+            if response.ok:
+                logger_global.info("The node: " + node_iri + ", has been deleted.")
+                return True
+            else:
+                logger_global.error(
+                    "The node: " + node_iri + ", cannot be deleted. Status code: " + str(response.status_code))
                 return False
         return True
 
@@ -188,5 +229,36 @@ class RevertAPI:
                 return True
             else:
                 logger_global.error("Updating nodes failed. Response code: " + str(response.status_code))
+                return False
+        return True
+
+    def revert_node_update(self, node_iri, dump_path):
+        """
+        Method to revert a node from logged node json file
+
+        Parameters
+        ----------
+        node_iri: str, obligatory
+            an iri of a node to act on
+        dump_path: str, obligatory
+            path to logged node json file
+
+        Returns
+        -------
+        bool
+            True if node has been updated and False otherwise
+        """
+        with open(dump_path) as f:
+            node_info = json.load(f)
+
+        payload = node_info['items'][0]
+        response = self.put_guarded_request(payload=payload, url=self.DTP_CONFIG.get_api_url('update_set'))
+        if not self.simulation_mode:
+            if response.ok:
+                logger_global.info(f"Revert node: {node_iri}")
+                return True
+            else:
+                logger_global.error(
+                    "Revert updating node failed. Response code: " + str(response.status_code))
                 return False
         return True

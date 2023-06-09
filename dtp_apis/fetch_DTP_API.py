@@ -29,6 +29,18 @@ class FetchAPI:
         returns dictionary created from JSON
     fetch_construction_nodes(url)
         returns dictionary created from JSON
+    fetch_work_package_nodes(url)
+        returns dictionary created from JSON
+    fetch_work_package_connected_activity_nodes(wp_node_iri, url)
+        returns dictionary created from JSON
+    fetch_asperformed_connected_asdesigned_op_nodes(asdesigned_node_iri, url)
+        returns dictionary created from JSON
+    fetch_activity_connected_task_nodes(activity_node_iri, url)
+        returns dictionary created from JSON
+    fetch_elements_connected_task_nodes(task_node_iri, url)
+        returns dictionary created from JSON
+    fetch_activity_nodes(url)
+        returns dictionary created from JSON
     asbuilt_fetch_connected_asdesigned_nodes(asbuilt_node_iri)
         returns dictionary created from JSON
     asdesigned_fetch_connected_task_nodes(asdesigned_node_iri, url)
@@ -214,6 +226,253 @@ class FetchAPI:
                 "$classes": {
                     "$contains": self.DTP_CONFIG.get_ontology_uri('asPerformedConstruction'),
                     "$inheritance": True
+                }
+            }
+        })
+
+        req_url = self.DTP_CONFIG.get_api_url('get_find_elements') if not url else url
+        return self.post_general_request(payload, req_url).json()
+
+    def fetch_work_package_nodes(self, url=None):
+        """
+        The method queries work package nodes from the platform.
+
+        Parameters
+        ----------
+        url : str, optional
+            used to fetch a next page
+
+        Returns
+        ------
+        dictionary
+            JSON mapped to a dictionary. The data contain as-planned work package nodes.
+        """
+
+        payload = json.dumps({
+            "query": {
+                "$domain": self.DTP_CONFIG.get_domain(),
+                "$classes": {
+                    "$contains": self.DTP_CONFIG.get_ontology_uri('workpackage')
+                }
+            }
+        })
+
+        req_url = self.DTP_CONFIG.get_api_url('get_find_elements') if not url else url
+        return self.post_general_request(payload, req_url).json()
+
+    def fetch_work_package_connected_activity_nodes(self, wp_node_iri, url=None):
+        """
+        The method fetches activity nodes connected to a work package node identified by wp_node_iri
+
+        Parameters
+        ----------
+        wp_node_iri : str, obligatory
+            a valid IRI of a node.
+        url : str, optional
+            used to fetch a next page
+
+        Returns
+        ------
+        dictionary
+            JSON mapped to a dictionary. The data contain activity nodes connected to wp_node_iri.
+        """
+
+        payload = json.dumps({
+            "query": [{
+                "$domain": self.DTP_CONFIG.get_domain(),
+                "$iri": wp_node_iri,
+                "->" + self.DTP_CONFIG.get_ontology_uri('hasActivity'): {
+                    "$alias": "activity"
+                }
+            },
+                {
+                    "$alias": "activity",
+                    "$domain": self.DTP_CONFIG.get_domain(),
+                    "$classes": {
+                        "$contains": self.DTP_CONFIG.get_ontology_uri('activity')
+                    }
+                }
+            ],
+            "return": "activity"
+        })
+
+        req_url = self.DTP_CONFIG.get_api_url('get_find_elements') if not url else url
+        return self.post_general_request(payload, req_url).json()
+
+    def fetch_activity_connected_task_nodes(self, activity_node_iri, url=None):
+        """
+        The method fetches task nodes connected to an activity package node identified by activity_node_iri
+
+        Parameters
+        ----------
+        activity_node_iri : str, obligatory
+            a valid IRI of a node.
+        url : str, optional
+            used to fetch a next page
+
+        Returns
+        ------
+        dictionary
+            JSON mapped to a dictionary. The data contain activity nodes connected to wp_node_iri.
+        """
+
+        payload = json.dumps({
+            "query": [{
+                "$domain": self.DTP_CONFIG.get_domain(),
+                "$iri": activity_node_iri,
+                "->" + self.DTP_CONFIG.get_ontology_uri('hasTask'): {
+                    "$alias": "task"
+                }
+            },
+                {
+                    "$alias": "task",
+                    "$domain": self.DTP_CONFIG.get_domain(),
+                    "$classes": {
+                        "$contains": self.DTP_CONFIG.get_ontology_uri('task')
+                    }
+                }
+            ],
+            "return": "task"
+        })
+
+        req_url = self.DTP_CONFIG.get_api_url('get_find_elements') if not url else url
+        return self.post_general_request(payload, req_url).json()
+
+    def fetch_elements_connected_task_nodes(self, task_node_iri, url=None):
+        """
+        The method fetches element nodes connected to a task node identified by task_node_iri
+
+        Parameters
+        ----------
+        task_node_iri : str, obligatory
+            a valid IRI of a node.
+        url : str, optional
+            used to fetch a next page
+
+        Returns
+        ------
+        dictionary
+            JSON mapped to a dictionary. The data contain activity nodes connected to wp_node_iri.
+        """
+
+        payload = json.dumps({
+            "query": [{
+                "$domain": self.DTP_CONFIG.get_domain(),
+                "$iri": task_node_iri,
+                "->" + self.DTP_CONFIG.get_ontology_uri('hasTarget'): {
+                    "$alias": "element"
+                }
+            }
+            ],
+            "return": "element"
+        })
+
+        req_url = self.DTP_CONFIG.get_api_url('get_find_elements') if not url else url
+        return self.post_general_request(payload, req_url).json()
+
+    def fetch_asperformed_connected_asdesigned_nodes(self, asdesigned_node_iri, url=None):
+        """
+        The method fetches as-performed nodes connected to an as-designed node identified with node_iri
+
+        Parameters
+        ----------
+        asdesigned_node_iri : str, obligatory
+            a valid IRI of a node.
+        url : str, optional
+            used to fetch a next page
+
+        Returns
+        ------
+        int
+            return the number of defect nodes connected to the node identified by node_iri
+        """
+
+        payload = json.dumps({
+            "query": [{
+                "$domain": self.DTP_CONFIG.get_domain(),
+                "$iri": asdesigned_node_iri,
+                "<-" + self.DTP_CONFIG.get_ontology_uri('intentStatusRelation'): {
+                    "$alias": "AsPerformed"
+                }
+            },
+                {
+                    "$alias": "AsPerformed",
+                    "$domain": self.DTP_CONFIG.get_domain(),
+                    "$classes": {
+                        "$contains": self.DTP_CONFIG.get_ontology_uri('classElement'),
+                        "$inheritance": True
+                    }  # ,
+                    # this cannot be included because of the missing info for Mislata site
+                    # self.DTP_CONFIG.get_ontology_uri('isAsDesigned'): False
+                }
+            ],
+            "edge": True,  # TODO: Not sure what 'edge' means in this query
+            "return": "AsPerformed"
+        })
+
+        req_url = self.DTP_CONFIG.get_api_url('get_find_elements') if not url else url
+        return self.post_general_request(payload, req_url).json()
+
+    def fetch_asperformed_connected_asdesigned_op_nodes(self, asdesigned_node_iri, url=None):
+        """
+        The method fetches as-performed operation nodes connected to an as-designed node identified with node_iri
+
+        Parameters
+        ----------
+        asdesigned_node_iri : str, obligatory
+            a valid IRI of a node.
+        url : str, optional
+            used to fetch a next page
+
+        Returns
+        ------
+        int
+            return the number of defect nodes connected to the node identified by node_iri
+        """
+
+        payload = json.dumps({
+            "query": [{
+                "$domain": self.DTP_CONFIG.get_domain(),
+                "$iri": asdesigned_node_iri,
+                "<-" + self.DTP_CONFIG.get_ontology_uri('intentStatusRelation'): {
+                    "$alias": "AsPerformed"
+                }
+            },
+                {
+                    "$alias": "AsPerformed",
+                    "$domain": self.DTP_CONFIG.get_domain(),
+                    "$classes": {
+                        "$contains": self.DTP_CONFIG.get_ontology_uri('asPerformedOperation')
+                    }
+                }
+            ],
+            # "edge": True,  # TODO: Not sure what 'edge' means in this query
+            "return": "AsPerformed"
+        })
+
+        req_url = self.DTP_CONFIG.get_api_url('get_find_elements') if not url else url
+        return self.post_general_request(payload, req_url).json()
+
+    def fetch_activity_nodes(self, url=None):
+        """
+        The method queries activity nodes from the platform.
+
+        Parameters
+        ----------
+        url : str, optional
+            used to fetch a next page
+
+        Returns
+        ------
+        dictionary
+            JSON mapped to a dictionary. The data contain as-planned work package nodes.
+        """
+
+        payload = json.dumps({
+            "query": {
+                "$domain": self.DTP_CONFIG.get_domain(),
+                "$classes": {
+                    "$contains": self.DTP_CONFIG.get_ontology_uri('activity')
                 }
             }
         })
@@ -471,7 +730,7 @@ class FetchAPI:
 
     def construction_fetch_connected_operation_nodes(self, constr_node_iri, url=None):
         """
-        The method fetches operation nodes connected to a node identified by constr_node__iri
+        The method fetches operation nodes connected to a node identified by constr_node_iri
 
         Parameters
         ----------

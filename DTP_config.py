@@ -60,7 +60,7 @@ class DTPConfig:
         lines = f.readlines()
 
         for line in lines:
-            token = token + line
+            token = token + line.rstrip()
         f.close()
 
         if len(token) == 0:

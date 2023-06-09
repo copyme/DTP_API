@@ -18,19 +18,22 @@ class CreateAPI:
 
     Methods
     -------
-    create_asbuilt_node(url)
+    create_asbuilt_node(element_iri_uri, progress, timestamp, element_type, target_iri)
         returns bool, True if success and False otherwise
-    create_defect_node(url)
+    create_defect_node(defect_class, defect_node_iri, defect_criticality, timestamp, defect_type)
         returns bool, True if success and False otherwise
-    create_kpi_nodefectsperwork(url)
+    create_kpi_nodefectsperwork(kpi_node_iri, task_type, value, ref_quant, sampl_quant, inter_start_date,
+                                    inter_end_date)
         returns bool, True if success and False otherwise
-    create_action_node(element_uuid)
+    create_action_node(task_type, action_node_iri, task_iri, target_as_built_iri, contractor, process_start,
+        process_end)
         returns bool, True if success and False otherwise
-    create_operation_node(blob_uuid)
+    create_operation_node(taskType, oper_node_iri, target_activity_iri, list_of_action_iri, process_start,
+         process_end)
         returns bool, True if success and False otherwise
-    create_construction_node()
+    create_construction_node(productionMethodType, constr_node_iri, workpkg_node_iri, list_of_operation_iri)
         returns bool, True if success and False otherwise
-    create_kpi_zerodefectwork(IRI)
+    create_kpi_zerodefectwork(kpi_node_iri, value, ref_quant, sampl_quant, inter_start_date, inter_end_date)
         returns bool, True if success and False otherwise
     """
 
@@ -130,8 +133,11 @@ class CreateAPI:
 
         Parameters
         ----------
-        node_iri : str, obligatory
-            a valid IRI of a node.
+        defect_class
+        defect_node_iri
+        defect_criticality
+        timestamp
+        defect_type
 
         Raises
         ------
@@ -141,6 +147,7 @@ class CreateAPI:
         ------
         int
             return True if a new defect node has been created and False otherwise.
+
         """
 
         if not validators.url(defect_node_iri):
@@ -201,15 +208,27 @@ class CreateAPI:
                 return False
         return True
 
-    def create_action_node(self, taskType, action_node_iri, target_task_iri, target_as_built_iri, contractor,
-                           processStart, processEnd):
+    def create_action_node(self, task_type, action_node_iri, task_iri, target_as_built_iri, contractor,
+                           process_start, process_end):
         """
         The method creates a new action.
 
         Parameters
         ----------
-        node_iri : str, obligatory
-            a valid IRI of a node.
+        task_type : str, obligatory
+            a valid task type.
+        action_node_iri: str, obligatory
+            a valid action IRI of a node.
+        task_iri:
+            a valid task IRI.
+        target_as_built_iri: str, obligatory
+            a valid iri of the as-built targets of action
+        contractor: str, obligatory
+            contractor from as-planned
+        process_start: str, obligatory
+            Start date of the action
+        process_end: str, obligatory
+            End date of the action
 
         Raises
         ------
@@ -217,8 +236,8 @@ class CreateAPI:
 
         Returns
         ------
-        int
-            return True if a new defect node has been created and False otherwise.
+        bool
+            return True if a new action node has been created and False otherwise.
         """
 
         if not validators.url(action_node_iri):
@@ -230,9 +249,9 @@ class CreateAPI:
                 "_domain": self.DTP_CONFIG.get_domain(),
                 "_iri": action_node_iri,
                 "_visibility": 0,
-                self.DTP_CONFIG.get_ontology_uri('hasTaskType'): taskType,
-                self.DTP_CONFIG.get_ontology_uri('processStart'): processStart,
-                self.DTP_CONFIG.get_ontology_uri('processEnd'): processEnd,
+                self.DTP_CONFIG.get_ontology_uri('hasTaskType'): task_type,
+                self.DTP_CONFIG.get_ontology_uri('processStart'): process_start,
+                self.DTP_CONFIG.get_ontology_uri('processEnd'): process_end,
                 self.DTP_CONFIG.get_ontology_uri('constructionContractor'): contractor,
                 "_outE": [
                     {
@@ -241,7 +260,7 @@ class CreateAPI:
                     },
                     {
                         "_label": self.DTP_CONFIG.get_ontology_uri('intentStatusRelation'),
-                        "_targetIRI": target_task_iri
+                        "_targetIRI": task_iri
                     }
                 ]
             }
@@ -258,14 +277,25 @@ class CreateAPI:
                 return False
         return True
 
-    def create_operation_node(self, taskType, oper_node_iri, target_activity_iri, processStart, processEnd):
+    def create_operation_node(self, taskType, oper_node_iri, target_activity_iri, list_of_action_iri, process_start,
+                              process_end):
         """
         The method creates a new operation.
 
         Parameters
         ----------
-        node_iri : str, obligatory
+        taskType : str, obligatory
+            a valid task type from activity node.
+        oper_node_iri : str, obligatory
             a valid IRI of a node.
+        target_activity_iri : str, obligatory
+            a valid activity.
+        list_of_action_iri : list, optional
+            list of connection actions iri.
+        process_start: str, obligatory
+            Start date of the action
+        process_end: str, obligatory
+            End date of the action
 
         Raises
         ------
@@ -273,27 +303,40 @@ class CreateAPI:
 
         Returns
         ------
-        int
-            return True if a new defect node has been created and False otherwise.
+        bool
+            return True if a new operation node has been created and False otherwise.
         """
 
         if not validators.url(oper_node_iri):
             raise Exception("Sorry, the IRI is not a valid URL.")
 
+        # create out edges list of dictionaries
+        out_edge_to_actions = []
+        for action_iri in list_of_action_iri:
+            out_edge_dict = {
+                "_label": self.DTP_CONFIG.get_ontology_uri('hasAction'),
+                "_targetIRI": action_iri
+            }
+            out_edge_to_actions.append(out_edge_dict)
+
         payload = json.dumps([
             {
-                "_classes": [self.DTP_CONFIG.get_ontology_uri('asPerformedOperation')],
                 "_domain": self.DTP_CONFIG.get_domain(),
+                "_classes": [self.DTP_CONFIG.get_ontology_uri('asPerformedOperation')],
                 "_iri": oper_node_iri,
                 "_visibility": 0,
                 self.DTP_CONFIG.get_ontology_uri('hasTaskType'): taskType,
-                self.DTP_CONFIG.get_ontology_uri('processStart'): processStart,
-                self.DTP_CONFIG.get_ontology_uri('processEnd'): processEnd,
+                self.DTP_CONFIG.get_ontology_uri('processStart'): process_start,
+                # TODO: update processEnd and add latest date to updateDate.
+                #  processEnd should be only filled when all action under it is complete. For now, processEnd stores
+                #  latest update date
+                self.DTP_CONFIG.get_ontology_uri('processEnd'): process_end,
                 "_outE": [
                     {
                         "_label": self.DTP_CONFIG.get_ontology_uri('intentStatusRelation'),
                         "_targetIRI": target_activity_iri
-                    }
+                    },
+                    *out_edge_to_actions
                 ]
             }
         ])
@@ -309,14 +352,20 @@ class CreateAPI:
                 return False
         return True
 
-    def create_construction_node(self, productionMethodType, constr_node_iri, workpkg_node_iri):
+    def create_construction_node(self, productionMethodType, constr_node_iri, workpkg_node_iri, list_of_operation_iri):
         """
-        The method creates a new operation.
+        The method creates a new construction.
 
         Parameters
         ----------
-        node_iri : str, obligatory
+        productionMethodType : str, obligatory
+            a valid production method type from corresponding work package
+        constr_node_iri : str, obligatory
             a valid IRI of a node.
+        workpkg_node_iri : str, obligatory
+            a valid work package IRI.
+        list_of_operation_iri : list, optional
+            list of connected operation iri
 
         Raises
         ------
@@ -324,12 +373,21 @@ class CreateAPI:
 
         Returns
         ------
-        int
-            return True if a new defect node has been created and False otherwise.
+        bool
+            return True if a new construction node has been created and False otherwise.
         """
 
         if not validators.url(constr_node_iri):
             raise Exception("Sorry, the IRI is not a valid URL.")
+
+        # create out edges list of dictionaries
+        out_edge_to_operation = []
+        for operation_iri in list_of_operation_iri:
+            out_edge_dict = {
+                "_label": self.DTP_CONFIG.get_ontology_uri('hasOperation'),
+                "_targetIRI": operation_iri
+            }
+            out_edge_to_operation.append(out_edge_dict)
 
         payload = json.dumps([
             {
@@ -342,7 +400,8 @@ class CreateAPI:
                     {
                         "_label": self.DTP_CONFIG.get_ontology_uri('intentStatusRelation'),
                         "_targetIRI": workpkg_node_iri
-                    }
+                    },
+                    *out_edge_to_operation
                 ]
             }
         ])
