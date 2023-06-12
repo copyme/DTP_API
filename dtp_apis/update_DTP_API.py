@@ -186,3 +186,83 @@ class UpdateAPI:
             return True
         else:
             return True
+
+    def delete_param_in_node(self, node_iri, field, previous_field_value=None, field_placeholder="delete",
+                             is_revert_session=False):
+        """
+        The method removes a specific field from a node
+
+        Parameters
+        ----------
+        node_iri: str, obligatory
+            an iri of a node to act on
+        field: str, obligatory
+            an url or str of node field
+        previous_field_value: str, optional
+            previous field value
+        field_placeholder: str, optional
+            placeholder for the deleting field
+        is_revert_session: bool, optional
+            true if reverting from session file
+
+        Returns
+        -------
+        bool
+            True if a blob has been node has been updated and False otherwise
+        """
+        if not is_revert_session:
+            assert previous_field_value, 'previous_field_value needed for logging'
+        payload = json.dumps([{
+            "_domain": self.DTP_CONFIG.get_domain(),
+            "_iri": node_iri,
+            field: field_placeholder  # 'delete' is a placeholder to ensure payload is valid
+        }])
+
+        response = self.put_guarded_request(payload=payload, url=self.DTP_CONFIG.get_api_url('update_unset'))
+        if not self.simulation_mode:
+            if response.ok:
+                if self.session_logger is not None:
+                    self.session_logger.info(
+                        f"DTP_API - REMOVED_PARAM_NODE_OPERATION: {node_iri}, {field}, {previous_field_value} ")
+                return True
+            else:
+                logger_global.error("Updating nodes failed. Response code: " + str(response.status_code))
+                return False
+        return True
+
+    def add_param_in_node(self, node_iri, field, field_value):
+        """
+        The method add new parameter to the node
+
+        Parameters
+        ----------
+        node_iri: str, obligatory
+            an iri of a node to be updated
+        field: str, obligatory
+            url or str of the field name
+        field_value: str, obligatory
+            value of the adding field
+
+        Returns
+        -------
+        bool
+            True if a blob has been node has been updated and False otherwise
+        """
+
+        payload = json.dumps([{
+            "_domain": self.DTP_CONFIG.get_domain(),
+            "_iri": node_iri,
+            field: field_value
+        }])
+
+        response = self.put_guarded_request(payload=payload, url=self.DTP_CONFIG.get_api_url('update_set'))
+        if not self.simulation_mode:
+            if response.ok:
+                if self.session_logger is not None:
+                    self.session_logger.info(
+                        f"DTP_API - ADD_PARAM_NODE_OPERATION: {node_iri}, {field}, {field_value}")
+                return True
+            else:
+                logger_global.error("Updating nodes failed. Response code: " + str(response.status_code))
+                return False
+        return True
