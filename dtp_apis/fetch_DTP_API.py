@@ -21,6 +21,8 @@ class FetchAPI:
     -------
     get_uuid_for_iri(url)
         returns UUID
+    fetch_node_with_iri(iri)
+        returns dictionary created from JSON
     fetch_element_nodes(url)
         returns dictionary created from JSON
     fetch_asdesigned_nodes(url)

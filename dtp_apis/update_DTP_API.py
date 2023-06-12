@@ -20,6 +20,10 @@ class UpdateAPI:
         returns bool, True if success and False otherwise
     update_construction_node(constr_iri, list_of_operation_iri, log_path)
         returns bool, True if success and False otherwise
+    delete_param_in_node(node_iri, field, previous_field_value=None, field_placeholder, is_revert_session)
+        returns bool, True if success and False otherwise
+    add_param_in_node(node_iri, field, field_value)
+        returns bool, True if success and False otherwise
     """
 
     def update_asdesigned_param_node(self, node_iri, is_as_designed):
