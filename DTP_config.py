@@ -62,7 +62,7 @@ class DTPConfig:
         lines = f.readlines()
 
         for line in lines:
-            token = token + line.rstrip()
+            token = token + line.rstrip(' \t\n\r')
         f.close()
 
         if len(token) == 0:
@@ -72,39 +72,39 @@ class DTPConfig:
 
     def __map_api_urls(self, uris):
         for uri in uris:
-            self.api_uris[uri.attrib['function'].strip()] = uri.text
+            self.api_uris[uri.attrib['function'].strip(' \t\n\r')] = uri.text
 
     def __map_ontology_uris(self, uris):
         for uri in uris:
-            self.ontology_uris[uri.attrib['function'].strip()] = uri.text
+            self.ontology_uris[uri.attrib['function'].strip(' \t\n\r')] = uri.text
 
     def __map_object_types(self, objet_types):
         for obj_type in objet_types:
-            if not obj_type.text.strip() in self.objet_types:
+            if not obj_type.text.strip(' \t\n\r') in self.objet_types:
                 self.objet_types.append(obj_type.text.strip())
-            if not obj_type.attrib['field'].strip() in self.objet_type_classes:
-                self.objet_type_classes.append(obj_type.attrib['field'].strip())
+            if not obj_type.attrib['field'].strip(' \t\n\r') in self.objet_type_classes:
+                self.objet_type_classes.append(obj_type.attrib['field'].strip(' \t\n\r'))
 
     def __map_object_type_conversions(self, objet_type_map):
         for type_map in objet_type_map:
-            self.objet_type_maps[type_map.attrib['from'].strip()] = type_map.attrib['to'].strip()
+            self.objet_type_maps[type_map.attrib['from'].strip(' \t\n\r')] = type_map.attrib['to'].strip(' \t\n\r')
 
     def __init__(self, xml_path):
         config = ET.parse(xml_path).getroot()
 
-        self.version = config.find('VERSION').text.strip()
+        self.version = config.find('VERSION').text.strip(' \t\n\r')
 
-        token_path = config.find('DEV_TOKEN').text.strip()
+        token_path = config.find('DEV_TOKEN').text.strip(' \t\n\r')
         self.token = self.__read_dev_token(token_path)
 
-        self.dtp_domain = config.find('DTP_DOMAIN').text.strip()
+        self.dtp_domain = config.find('DTP_DOMAIN').text.strip(' \t\n\r')
         if not validators.url(self.dtp_domain):
             raise Exception("Sorry, the DTP domain URL is not a valid URL.")
 
         if self.dtp_domain[-1] != '/':
             self.dtp_domain = self.dtp_domain + '/'
 
-        self.kpi_domain = config.find('KPI_DOMAIN').text.strip()
+        self.kpi_domain = config.find('KPI_DOMAIN').text.strip(' \t\n\r')
         if not validators.url(self.kpi_domain):
             raise Exception("Sorry, the DTP domain URL is not a valid URL.")
 
@@ -133,7 +133,7 @@ class DTPConfig:
             self.__map_object_type_conversions(objet_type_map)
 
     def get_api_url(self, api_type, id=' '):
-        if len(id.strip()) == 0:
+        if len(id.strip(' \t\n\r')) == 0:
             return self.api_uris[api_type]
         else:
             return self.api_uris[api_type].replace('_ID_', id)
