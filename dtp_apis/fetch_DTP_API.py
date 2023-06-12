@@ -119,13 +119,13 @@ class FetchAPI:
         else:
             return str(uuid.uuid4())
 
-    def fetch_element_nodes(self, url=None):
+    def fetch_node_with_iri(self, node_iri):
         """
-        The method queries nodes of type elements from the platform.
+        The method queries nodes with given iri
 
         Parameters
         ----------
-        url : str, optional
+        node_iri : str, optional
             used to fetch a next page
 
         Returns
@@ -137,17 +137,49 @@ class FetchAPI:
         payload = json.dumps({
             "query": {
                 "$domain": self.DTP_CONFIG.get_domain(),
-                "$classes": {
-                    "$contains": self.DTP_CONFIG.get_ontology_uri('classElement'),
-                    "$inheritance": True
-                }
+                "iri": node_iri
             }
+        })
+
+        req_url = self.DTP_CONFIG.get_api_url('get_find_elements')
+        return self.post_general_request(payload, req_url).json()
+
+    def fetch_element_nodes(self, url=None, additional_filter=()):
+        """
+        The method queries nodes of type elements from the platform.
+
+        Parameters
+        ----------
+        url : str, optional
+            used to fetch a next page
+        additional_filter: tuple, optional
+            additional filter
+
+        Returns
+        ------
+        dictionary
+            JSON mapped to a dictionary. The data contain nodes of the type element.
+        """
+        query_dict = {
+            "$domain": self.DTP_CONFIG.get_domain(),
+            "$classes": {
+                "$contains": self.DTP_CONFIG.get_ontology_uri('classElement'),
+                "$inheritance": True
+            }
+        }
+
+        if additional_filter:
+            field_name, field_value = additional_filter
+            query_dict[field_name] = field_value
+
+        payload = json.dumps({
+            "query": query_dict
         })
 
         req_url = self.DTP_CONFIG.get_api_url('get_find_elements') if not url else url
         return self.post_general_request(payload, req_url).json()
 
-    def fetch_asdesigned_nodes(self, url=None):
+    def fetch_asdesigned_nodes(self, url=None, additional_filter=()):
         """
         The method queries As-Designed nodes from the platform.
 
@@ -155,6 +187,8 @@ class FetchAPI:
         ----------
         url : str, optional
             used to fetch a next page
+        additional_filter: tuple, optional
+            additional filter
 
         Returns
         ------
@@ -162,21 +196,27 @@ class FetchAPI:
             JSON mapped to a dictionary. The data contain nodes that are of type As-Designed.
         """
 
+        query_dict = {
+            "$domain": self.DTP_CONFIG.get_domain(),
+            "$classes": {
+                "$contains": self.DTP_CONFIG.get_ontology_uri('classElement'),
+                "$inheritance": True
+            },
+            self.DTP_CONFIG.get_ontology_uri('isAsDesigned'): True
+        }
+
+        if additional_filter:
+            field_name, field_value = additional_filter
+            query_dict[field_name] = field_value
+
         payload = json.dumps({
-            "query": {
-                "$domain": self.DTP_CONFIG.get_domain(),
-                "$classes": {
-                    "$contains": self.DTP_CONFIG.get_ontology_uri('classElement'),
-                    "$inheritance": True
-                },
-                self.DTP_CONFIG.get_ontology_uri('isAsDesigned'): True
-            }
+            query_dict
         })
 
         req_url = self.DTP_CONFIG.get_api_url('get_find_elements') if not url else url
         return self.post_general_request(payload, req_url).json()
 
-    def fetch_asbuilt_nodes(self, url=None):
+    def fetch_asbuilt_nodes(self, url=None, additional_filter=()):
         """
         The method queries As-Built nodes from the platform.
 
@@ -184,6 +224,8 @@ class FetchAPI:
         ----------
         url : str, optional
             used to fetch a next page
+        additional_filter: tuple, optional
+            additional filter
 
         Returns
         ------
@@ -191,15 +233,21 @@ class FetchAPI:
             JSON mapped to a dictionary. The data contain elements that are of type As-Built.
         """
 
+        query_dict = {
+            "$domain": self.DTP_CONFIG.get_domain(),
+            "$classes": {
+                "$contains": self.DTP_CONFIG.get_ontology_uri('classElement'),
+                "$inheritance": True
+            },
+            self.DTP_CONFIG.get_ontology_uri('isAsDesigned'): False
+        }
+
+        if additional_filter:
+            field_name, field_value = additional_filter
+            query_dict[field_name] = field_value
+
         payload = json.dumps({
-            "query": {
-                "$domain": self.DTP_CONFIG.get_domain(),
-                "$classes": {
-                    "$contains": self.DTP_CONFIG.get_ontology_uri('classElement'),
-                    "$inheritance": True
-                },
-                self.DTP_CONFIG.get_ontology_uri('isAsDesigned'): False
-            }
+            "query": query_dict
         })
 
         req_url = self.DTP_CONFIG.get_api_url('get_find_elements') if not url else url
