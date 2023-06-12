@@ -84,7 +84,9 @@ class DTPApi(FetchAPI, CountAPI, CreateAPI, LinkAPI, RevertAPI, SendAPI, UpdateA
                              'new_blob': 'NEW_BLOB',
                              'update_asdesigned_param': 'UPDATE_isAsDesigned_PARAM_NODE_OPERATION',
                              'update_operation': 'UPDATE_OPERATION_IRI',
-                             'update_construction': 'UPDATE_CONSTRUCTION_IRI'}
+                             'update_construction': 'UPDATE_CONSTRUCTION_IRI',
+                             'remove_param': 'REMOVED_PARAM_NODE_OPERATION',
+                             'add_param': 'ADD_PARAM_NODE_OPERATION'}
 
         try:
             self.log_markers = self.log_markers_node_classes | other_log_markers
@@ -278,6 +280,14 @@ class DTPApi(FetchAPI, CountAPI, CreateAPI, LinkAPI, RevertAPI, SendAPI, UpdateA
                 elif self.log_markers['update_construction'] in line:
                     node_iri, dump_path = get_info_from_log(line, self.log_markers['update_construction'])
                     self.revert_node_update(node_iri, dump_path)
+                    counter += 1
+                elif self.log_markers['remove_param'] in line:
+                    node_iri, field, field_value = get_info_from_log(line, self.log_markers['remove_param'])
+                    self.add_param_in_node(node_iri, field, field_value)
+                    counter += 1
+                elif self.log_markers['add_param'] in line:
+                    node_iri, field = get_info_from_log(line, self.log_markers['remove_param'])
+                    self.delete_param_in_node(node_iri, field, is_revert_session=True)
                     counter += 1
                 else:
                     try:
