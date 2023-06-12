@@ -146,7 +146,7 @@ class FetchAPI:
         req_url = self.DTP_CONFIG.get_api_url('get_find_elements')
         return self.post_general_request(payload, req_url).json()
 
-    def fetch_element_nodes(self, url=None, additional_filter=()):
+    def fetch_element_nodes(self, *additional_filter, url=None):
         """
         The method queries nodes of type elements from the platform.
 
@@ -170,9 +170,11 @@ class FetchAPI:
             }
         }
 
-        if additional_filter:
+        if len(additional_filter) == 2:
             field_name, field_value = additional_filter
             query_dict[field_name] = field_value
+        else:
+            url = additional_filter
 
         payload = json.dumps({
             "query": query_dict
@@ -181,7 +183,7 @@ class FetchAPI:
         req_url = self.DTP_CONFIG.get_api_url('get_find_elements') if not url else url
         return self.post_general_request(payload, req_url).json()
 
-    def fetch_asdesigned_nodes(self, url=None, additional_filter=()):
+    def fetch_asdesigned_nodes(self, *additional_filter, url=None):
         """
         The method queries As-Designed nodes from the platform.
 
@@ -207,18 +209,20 @@ class FetchAPI:
             self.DTP_CONFIG.get_ontology_uri('isAsDesigned'): True
         }
 
-        if additional_filter:
+        if len(additional_filter) == 2:
             field_name, field_value = additional_filter
             query_dict[field_name] = field_value
+        else:
+            url = additional_filter
 
         payload = json.dumps({
-            query_dict
+            "query": query_dict
         })
 
         req_url = self.DTP_CONFIG.get_api_url('get_find_elements') if not url else url
         return self.post_general_request(payload, req_url).json()
 
-    def fetch_asbuilt_nodes(self, url=None, additional_filter=()):
+    def fetch_asbuilt_nodes(self, *additional_filter, url=None):
         """
         The method queries As-Built nodes from the platform.
 
@@ -244,9 +248,11 @@ class FetchAPI:
             self.DTP_CONFIG.get_ontology_uri('isAsDesigned'): False
         }
 
-        if additional_filter:
+        if len(additional_filter) == 2:
             field_name, field_value = additional_filter
             query_dict[field_name] = field_value
+        else:
+            url = additional_filter
 
         payload = json.dumps({
             "query": query_dict
