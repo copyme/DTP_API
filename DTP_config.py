@@ -72,11 +72,11 @@ class DTPConfig:
 
     def __map_api_urls(self, uris):
         for uri in uris:
-            self.api_uris[uri.attrib['function'].strip(' \t\n\r')] = uri.text
+            self.api_uris[uri.attrib['function'].strip(' \t\n\r')] = uri.text.strip(' \t\n\r')
 
     def __map_ontology_uris(self, uris):
         for uri in uris:
-            self.ontology_uris[uri.attrib['function'].strip(' \t\n\r')] = uri.text
+            self.ontology_uris[uri.attrib['function'].strip(' \t\n\r')] = uri.text.strip(' \t\n\r')
 
     def __map_object_types(self, objet_types):
         for obj_type in objet_types:
