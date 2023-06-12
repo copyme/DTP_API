@@ -98,6 +98,7 @@ external configuration file to make the implementation general and easy to maint
 * `VERSION` : version of the configuration file,
 * `DEV_TOKEN` : the path to the file, which contains the developer token needed for the authentication,
 * `DTP_DOMAIN` : the domain used for the session,
+* `KPI_DOMAIN` : the KPI domain used for the session,
 * `API_URIS` : a list of API uri calls that are then mapped by the program,
     * `URI` :  nested tag representing an API uri, which has the following attributes,
         * `function` : the name used to map the API URI to its function,
