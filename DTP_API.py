@@ -330,9 +330,9 @@ class DTPApi(FetchAPI, CountAPI, CreateAPI, LinkAPI, RevertAPI, SendAPI, UpdateA
 
         while 'next' in elements.keys() and elements['size'] != 0:
             if len(fetch_function_arg) > 1:
-                elements = fetch_function(*fetch_function_arg, elements['next'])
+                elements = fetch_function(*fetch_function_arg, url=elements['next'])
             else:
-                elements = fetch_function(elements['next'])
+                elements = fetch_function(url=elements['next'])
 
             if elements['size'] <= 0:
                 break

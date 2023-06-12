@@ -221,7 +221,7 @@ class UpdateAPI:
         payload = json.dumps([{
             "_domain": self.DTP_CONFIG.get_domain(),
             "_iri": node_iri,
-            field: field_placeholder  # 'delete' is a placeholder to ensure payload is valid
+            field: field_placeholder  # field_placeholder to ensure payload is valid
         }])
 
         response = self.put_guarded_request(payload=payload, url=self.DTP_CONFIG.get_api_url('update_unset'))
