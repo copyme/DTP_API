@@ -13,6 +13,7 @@
             https://api.thinginthefuture.bim2twin.eu/avatars/_ID_/blobs
         </URL>
         <URL function="delete_avatar" type="xs:anyURL">https://api.thinginthefuture.bim2twin.eu/avatars/_ID_</URL>
+        <URL function="delete_avatar_iri" type="xs:anyURL">https://api.thinginthefuture.bim2twin.eu/avatars/delete</URL>
         <URL function="download_blob" type="xs:anyURL">https://api.thinginthefuture.bim2twin.eu/blobs/_ID_/download
         </URL>
         <URL function="send_blob" type="xs:anyURL">https://api.thinginthefuture.bim2twin.eu/blobs</URL>
