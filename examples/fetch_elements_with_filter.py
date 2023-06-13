@@ -8,10 +8,11 @@ import os
 import sys
 import time
 
+sys.path.insert(0, "../")
+
 from DTP_API import DTPApi
 from DTP_config import DTPConfig
 
-sys.path.insert(0, "../")
 
 
 def parse_args():
