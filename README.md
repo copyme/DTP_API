@@ -120,18 +120,25 @@ external configuration file to make the implementation general and easy to maint
 │   └── send_DTP_API.py                     # Mixin send API class
 ├── DTP_config.py                           # XML parser class
 ├── DTP_config.xml                          # DTP configuration file
-├── examples
-│   ├── count_activity_tasks.py
-│   ├── DTP_WP3.log
-│   ├── fetch_all_activities.py
-│   └── fetch_construction_operation.py
+├── examples                                # API examples
 ├── helpers.py                              # shared functions
 ├── multiprocessing_logging.py              # enables multiprocessing
 ├── README.md
-├── requirements.txt
-└── thingin_token.txt
+├── requirements.txt                        # requirments for DTP API
+└── thingin_token.txt                       # store thing'in token here
 
 ```
+
+## Creating IRI for new as-performed nodes
+
+Below is the rule to generate iri for a new as-performed node from an as-planned node iri.
+
+| As-planned type | As-planned IRI                            | As-performed IRI                           |
+|-----------------|:------------------------------------------|:-------------------------------------------|
+| Element         | http://bim2twin.eu/mislata/ifc-xyz        | http://bim2twin.eu/mislata/asbuilt-xyz     |
+| Task            | http://bim2twin.eu/mislata/task123        | http://bim2twin.eu/mislata/action123       |
+| Activity        | http://bim2twin.eu/mislata/activity123    | http://bim2twin.eu/mislata/activity123     |
+| Work package    | http://bim2twin.eu/mislata/workpackage123 | http://bim2twin.eu/mislata/construction123 |
 
 ## Examples
 
