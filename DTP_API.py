@@ -17,7 +17,13 @@ import validators
 from file_read_backwards import FileReadBackwards
 from tqdm import tqdm
 
-from DTP_config import DTPConfig
+try:
+    from DTP_config import DTPConfig
+except ModuleNotFoundError:
+    import sys
+    sys.path.append('DTP_API')
+    from DTP_config import DTPConfig
+
 from dtp_apis.count_DTP_API import CountAPI
 from dtp_apis.create_DTP_API import CreateAPI
 from dtp_apis.fetch_DTP_API import FetchAPI
