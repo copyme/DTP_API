@@ -72,8 +72,6 @@ class CreateAPI:
         if not validators.url(target_iri):
             raise Exception("Sorry, the target IRI is not a valid URL.")
 
-        ontology_id = secrets.token_hex(11)
-
         if progress == 100:
             payload = json.dumps([
                 {
@@ -81,7 +79,6 @@ class CreateAPI:
                     "_domain": self.DTP_CONFIG.get_domain(),
                     "_iri": element_iri_uri,
                     "_visibility": 0,
-                    self.DTP_CONFIG.get_ontology_uri('id'): ontology_id,
                     self.DTP_CONFIG.get_ontology_uri('isAsDesigned'): False,
                     self.DTP_CONFIG.get_ontology_uri('timeStamp'): timestamp,
                     self.DTP_CONFIG.get_ontology_uri('progress'): progress,
@@ -102,7 +99,6 @@ class CreateAPI:
                     "_classes": [self.DTP_CONFIG.get_ontology_uri('classElement')],
                     "_domain": self.DTP_CONFIG.get_domain(),
                     "_iri": element_iri_uri,
-                    self.DTP_CONFIG.get_ontology_uri('id'): ontology_id,
                     self.DTP_CONFIG.get_ontology_uri('isAsDesigned'): False,
                     self.DTP_CONFIG.get_ontology_uri('timeStamp'): timestamp,
                     self.DTP_CONFIG.get_ontology_uri('progress'): progress,
