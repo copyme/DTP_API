@@ -173,10 +173,8 @@ class FetchAPI:
         if len(additional_filter) == 2:
             field_name, field_value = additional_filter
             query_dict[field_name] = field_value
-        elif len(additional_filter) == 1:
-            url = additional_filter
-        else:
-            raise TypeError(f"Maximum additional_filter length is two but got {len(additional_filter)}")
+        elif len(additional_filter) > 2 or len(additional_filter) == 1:
+            raise TypeError(f"additional_filter only accept two arguments but got {len(additional_filter)}")
 
         payload = json.dumps({
             "query": query_dict
@@ -214,9 +212,7 @@ class FetchAPI:
         if len(additional_filter) == 2:
             field_name, field_value = additional_filter
             query_dict[field_name] = field_value
-        elif len(additional_filter) == 1:
-            url = additional_filter
-        else:
+        elif len(additional_filter) > 2 or len(additional_filter) == 1:
             raise TypeError(f"Maximum additional_filter length is two but got {len(additional_filter)}")
 
         payload = json.dumps({
@@ -255,9 +251,7 @@ class FetchAPI:
         if len(additional_filter) == 2:
             field_name, field_value = additional_filter
             query_dict[field_name] = field_value
-        elif len(additional_filter) == 1:
-            url = additional_filter
-        else:
+        elif len(additional_filter) > 2 or len(additional_filter) == 1:
             raise TypeError(f"Maximum additional_filter length is two but got {len(additional_filter)}")
 
         payload = json.dumps({
